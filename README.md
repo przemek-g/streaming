@@ -1,4 +1,4 @@
 streaming
 =========
 
-modelling processing of streams
+Modelling processing of data streams
