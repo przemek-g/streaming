@@ -1,0 +1,477 @@
+16:48:20,658 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+16:48:20,658 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+16:48:20,658 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/Users/Przemek/.m2/repository/storm/storm-console-logging/0.9.0.1/storm-console-logging-0.9.0.1.jar!/logback.xml]
+16:48:20,658 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs multiple times on the classpath.
+16:48:20,658 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/Users/Przemek/.m2/repository/storm/storm-console-logging/0.9.0.1/storm-console-logging-0.9.0.1.jar!/logback.xml]
+16:48:20,658 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/Users/Przemek/.m2/repository/storm/storm-core/0.9.0.1/storm-core-0.9.0.1.jar!/logback.xml]
+16:48:20,669 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@4e51728 - URL [jar:file:/Users/Przemek/.m2/repository/storm/storm-console-logging/0.9.0.1/storm-console-logging-0.9.0.1.jar!/logback.xml] is not of type file
+16:48:20,791 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+16:48:20,793 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Setting ReconfigureOnChangeFilter scanning period to 30 seconds
+16:48:20,793 |-INFO in ReconfigureOnChangeFilter{invocationCounter=0} - Will scan for changes in [[]] every 30 seconds. 
+16:48:20,793 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Adding ReconfigureOnChangeFilter as a turbo filter
+16:48:20,796 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+16:48:20,799 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [A1]
+16:48:20,812 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:48:20,837 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache.zookeeper] to WARN
+16:48:20,837 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+16:48:20,837 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [A1] to Logger[ROOT]
+16:48:20,838 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+16:48:20,839 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@3243bab6 - Registering current configuration as safe fallback point
+
+2088 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.zookeeper - Starting inprocess zookeeper at port 2000 and dir /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2c72121e-a5f5-4d9a-bd38-7a1b4d2afcda
+
+================= Starting NIMBUS process =========================================
+
+2227 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Starting Nimbus with conf {"dev.zookeeper.path" "/tmp/dev-storm-zookeeper", "topology.tick.tuple.freq.secs" nil, "topology.builtin.metrics.bucket.size.secs" 60, "topology.fall.back.on.java.serialization" true, "topology.max.error.report.per.interval" 5, "zmq.linger.millis" 0, "topology.skip.missing.kryo.registrations" true, "storm.messaging.netty.client_worker_threads" 1, "ui.childopts" "-Xmx768m", "storm.zookeeper.session.timeout" 20000, "nimbus.reassign" true, "topology.trident.batch.emit.interval.millis" 50, "nimbus.monitor.freq.secs" 10, "logviewer.childopts" "-Xmx128m", "java.library.path" "/usr/local/lib:/opt/local/lib:/usr/lib", "topology.executor.send.buffer.size" 1024, "storm.local.dir" "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//cd79cd2a-88c7-49a6-8dba-6dd0590ac0cd", "storm.messaging.netty.buffer_size" 5242880, "supervisor.worker.start.timeout.secs" 120, "topology.enable.message.timeouts" true, "nimbus.cleanup.inbox.freq.secs" 600, "nimbus.inbox.jar.expiration.secs" 3600, "drpc.worker.threads" 64, "topology.worker.shared.thread.pool.size" 4, "nimbus.host" "localhost", "storm.messaging.netty.min_wait_ms" 100, "storm.zookeeper.port" 2000, "transactional.zookeeper.port" nil, "topology.executor.receive.buffer.size" 1024, "transactional.zookeeper.servers" nil, "storm.zookeeper.root" "/storm", "storm.zookeeper.retry.intervalceiling.millis" 30000, "supervisor.enable" true, "storm.messaging.netty.server_worker_threads" 1, "storm.zookeeper.servers" ["localhost"], "transactional.zookeeper.root" "/transactional", "topology.acker.executors" nil, "topology.transfer.buffer.size" 1024, "topology.worker.childopts" nil, "drpc.queue.size" 128, "worker.childopts" "-Xmx768m", "supervisor.heartbeat.frequency.secs" 5, "topology.error.throttle.interval.secs" 10, "zmq.hwm" 0, "drpc.port" 3772, "supervisor.monitor.frequency.secs" 3, "drpc.childopts" "-Xmx768m", "topology.receiver.buffer.size" 8, "task.heartbeat.frequency.secs" 3, "topology.tasks" nil, "storm.messaging.netty.max_retries" 30, "topology.spout.wait.strategy" "backtype.storm.spout.SleepSpoutWaitStrategy", "topology.max.spout.pending" nil, "storm.zookeeper.retry.interval" 1000, "topology.sleep.spout.wait.strategy.time.ms" 1, "nimbus.topology.validator" "backtype.storm.nimbus.DefaultTopologyValidator", "supervisor.slots.ports" [6700 6701 6702 6703], "topology.debug" false, "nimbus.task.launch.secs" 120, "nimbus.supervisor.timeout.secs" 60, "topology.message.timeout.secs" 30, "task.refresh.poll.secs" 10, "topology.workers" 1, "supervisor.childopts" "-Xmx256m", "nimbus.thrift.port" 6627, "topology.stats.sample.rate" 0.05, "worker.heartbeat.frequency.secs" 1, "topology.tuple.serializer" "backtype.storm.serialization.types.ListDelegateSerializer", "topology.disruptor.wait.strategy" "com.lmax.disruptor.BlockingWaitStrategy", "nimbus.task.timeout.secs" 30, "storm.zookeeper.connection.timeout" 15000, "topology.kryo.factory" "backtype.storm.serialization.DefaultKryoFactory", "drpc.invocations.port" 3773, "logviewer.port" 8000, "zmq.threads" 1, "storm.zookeeper.retry.times" 5, "storm.thrift.transport" "backtype.storm.security.auth.SimpleTransportPlugin", "topology.state.synchronization.timeout.secs" 60, "supervisor.worker.timeout.secs" 30, "nimbus.file.copy.expiration.secs" 600, "storm.messaging.transport" "backtype.storm.messaging.zmq", "logviewer.appender.name" "A1", "storm.messaging.netty.max_wait_ms" 1000, "drpc.request.timeout.secs" 600, "storm.local.mode.zmq" false, "ui.port" 8080, "nimbus.childopts" "-Xmx1024m", "storm.cluster.mode" "local", "topology.optimize" true, "topology.max.task.parallelism" nil}
+2231 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Using default scheduler
+2254 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2407 [storm.starter.ExclamationTopology.main()-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+2425 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2446 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2448 [storm.starter.ExclamationTopology.main()-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+2451 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2452 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2454 [storm.starter.ExclamationTopology.main()-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+
+=============== Starting SUPERVISOR process =======================================
+
+2456 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2466 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Starting Supervisor with conf {"dev.zookeeper.path" "/tmp/dev-storm-zookeeper", "topology.tick.tuple.freq.secs" nil, "topology.builtin.metrics.bucket.size.secs" 60, "topology.fall.back.on.java.serialization" true, "topology.max.error.report.per.interval" 5, "zmq.linger.millis" 0, "topology.skip.missing.kryo.registrations" true, "storm.messaging.netty.client_worker_threads" 1, "ui.childopts" "-Xmx768m", "storm.zookeeper.session.timeout" 20000, "nimbus.reassign" true, "topology.trident.batch.emit.interval.millis" 50, "nimbus.monitor.freq.secs" 10, "logviewer.childopts" "-Xmx128m", "java.library.path" "/usr/local/lib:/opt/local/lib:/usr/lib", "topology.executor.send.buffer.size" 1024, "storm.local.dir" "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//9b562151-6f10-46c6-b254-bac9f5ab5e53", "storm.messaging.netty.buffer_size" 5242880, "supervisor.worker.start.timeout.secs" 120, "topology.enable.message.timeouts" true, "nimbus.cleanup.inbox.freq.secs" 600, "nimbus.inbox.jar.expiration.secs" 3600, "drpc.worker.threads" 64, "topology.worker.shared.thread.pool.size" 4, "nimbus.host" "localhost", "storm.messaging.netty.min_wait_ms" 100, "storm.zookeeper.port" 2000, "transactional.zookeeper.port" nil, "topology.executor.receive.buffer.size" 1024, "transactional.zookeeper.servers" nil, "storm.zookeeper.root" "/storm", "storm.zookeeper.retry.intervalceiling.millis" 30000, "supervisor.enable" true, "storm.messaging.netty.server_worker_threads" 1, "storm.zookeeper.servers" ["localhost"], "transactional.zookeeper.root" "/transactional", "topology.acker.executors" nil, "topology.transfer.buffer.size" 1024, "topology.worker.childopts" nil, "drpc.queue.size" 128, "worker.childopts" "-Xmx768m", "supervisor.heartbeat.frequency.secs" 5, "topology.error.throttle.interval.secs" 10, "zmq.hwm" 0, "drpc.port" 3772, "supervisor.monitor.frequency.secs" 3, "drpc.childopts" "-Xmx768m", "topology.receiver.buffer.size" 8, "task.heartbeat.frequency.secs" 3, "topology.tasks" nil, "storm.messaging.netty.max_retries" 30, "topology.spout.wait.strategy" "backtype.storm.spout.SleepSpoutWaitStrategy", "topology.max.spout.pending" nil, "storm.zookeeper.retry.interval" 1000, "topology.sleep.spout.wait.strategy.time.ms" 1, "nimbus.topology.validator" "backtype.storm.nimbus.DefaultTopologyValidator", "supervisor.slots.ports" (1 2 3), "topology.debug" false, "nimbus.task.launch.secs" 120, "nimbus.supervisor.timeout.secs" 60, "topology.message.timeout.secs" 30, "task.refresh.poll.secs" 10, "topology.workers" 1, "supervisor.childopts" "-Xmx256m", "nimbus.thrift.port" 6627, "topology.stats.sample.rate" 0.05, "worker.heartbeat.frequency.secs" 1, "topology.tuple.serializer" "backtype.storm.serialization.types.ListDelegateSerializer", "topology.disruptor.wait.strategy" "com.lmax.disruptor.BlockingWaitStrategy", "nimbus.task.timeout.secs" 30, "storm.zookeeper.connection.timeout" 15000, "topology.kryo.factory" "backtype.storm.serialization.DefaultKryoFactory", "drpc.invocations.port" 3773, "logviewer.port" 8000, "zmq.threads" 1, "storm.zookeeper.retry.times" 5, "storm.thrift.transport" "backtype.storm.security.auth.SimpleTransportPlugin", "topology.state.synchronization.timeout.secs" 60, "supervisor.worker.timeout.secs" 30, "nimbus.file.copy.expiration.secs" 600, "storm.messaging.transport" "backtype.storm.messaging.zmq", "logviewer.appender.name" "A1", "storm.messaging.netty.max_wait_ms" 1000, "drpc.request.timeout.secs" 600, "storm.local.mode.zmq" false, "ui.port" 8080, "nimbus.childopts" "-Xmx1024m", "storm.cluster.mode" "local", "topology.optimize" true, "topology.max.task.parallelism" nil}
+2478 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2481 [storm.starter.ExclamationTopology.main()-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+2484 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2508 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Starting supervisor with id ab57c0b7-df6a-4bc2-9d0a-84abcaa08a76 at host dhcp-13-187.lip.ens-lyon.fr
+
+================ Starting the second SUPERVISOR process ============================================-
+
+2511 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Starting Supervisor with conf {"dev.zookeeper.path" "/tmp/dev-storm-zookeeper", "topology.tick.tuple.freq.secs" nil, "topology.builtin.metrics.bucket.size.secs" 60, "topology.fall.back.on.java.serialization" true, "topology.max.error.report.per.interval" 5, "zmq.linger.millis" 0, "topology.skip.missing.kryo.registrations" true, "storm.messaging.netty.client_worker_threads" 1, "ui.childopts" "-Xmx768m", "storm.zookeeper.session.timeout" 20000, "nimbus.reassign" true, "topology.trident.batch.emit.interval.millis" 50, "nimbus.monitor.freq.secs" 10, "logviewer.childopts" "-Xmx128m", "java.library.path" "/usr/local/lib:/opt/local/lib:/usr/lib", "topology.executor.send.buffer.size" 1024, "storm.local.dir" "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2e414e76-03cf-40ac-b6a0-5fb55ea285db", "storm.messaging.netty.buffer_size" 5242880, "supervisor.worker.start.timeout.secs" 120, "topology.enable.message.timeouts" true, "nimbus.cleanup.inbox.freq.secs" 600, "nimbus.inbox.jar.expiration.secs" 3600, "drpc.worker.threads" 64, "topology.worker.shared.thread.pool.size" 4, "nimbus.host" "localhost", "storm.messaging.netty.min_wait_ms" 100, "storm.zookeeper.port" 2000, "transactional.zookeeper.port" nil, "topology.executor.receive.buffer.size" 1024, "transactional.zookeeper.servers" nil, "storm.zookeeper.root" "/storm", "storm.zookeeper.retry.intervalceiling.millis" 30000, "supervisor.enable" true, "storm.messaging.netty.server_worker_threads" 1, "storm.zookeeper.servers" ["localhost"], "transactional.zookeeper.root" "/transactional", "topology.acker.executors" nil, "topology.transfer.buffer.size" 1024, "topology.worker.childopts" nil, "drpc.queue.size" 128, "worker.childopts" "-Xmx768m", "supervisor.heartbeat.frequency.secs" 5, "topology.error.throttle.interval.secs" 10, "zmq.hwm" 0, "drpc.port" 3772, "supervisor.monitor.frequency.secs" 3, "drpc.childopts" "-Xmx768m", "topology.receiver.buffer.size" 8, "task.heartbeat.frequency.secs" 3, "topology.tasks" nil, "storm.messaging.netty.max_retries" 30, "topology.spout.wait.strategy" "backtype.storm.spout.SleepSpoutWaitStrategy", "topology.max.spout.pending" nil, "storm.zookeeper.retry.interval" 1000, "topology.sleep.spout.wait.strategy.time.ms" 1, "nimbus.topology.validator" "backtype.storm.nimbus.DefaultTopologyValidator", "supervisor.slots.ports" (4 5 6), "topology.debug" false, "nimbus.task.launch.secs" 120, "nimbus.supervisor.timeout.secs" 60, "topology.message.timeout.secs" 30, "task.refresh.poll.secs" 10, "topology.workers" 1, "supervisor.childopts" "-Xmx256m", "nimbus.thrift.port" 6627, "topology.stats.sample.rate" 0.05, "worker.heartbeat.frequency.secs" 1, "topology.tuple.serializer" "backtype.storm.serialization.types.ListDelegateSerializer", "topology.disruptor.wait.strategy" "com.lmax.disruptor.BlockingWaitStrategy", "nimbus.task.timeout.secs" 30, "storm.zookeeper.connection.timeout" 15000, "topology.kryo.factory" "backtype.storm.serialization.DefaultKryoFactory", "drpc.invocations.port" 3773, "logviewer.port" 8000, "zmq.threads" 1, "storm.zookeeper.retry.times" 5, "storm.thrift.transport" "backtype.storm.security.auth.SimpleTransportPlugin", "topology.state.synchronization.timeout.secs" 60, "supervisor.worker.timeout.secs" 30, "nimbus.file.copy.expiration.secs" 600, "storm.messaging.transport" "backtype.storm.messaging.zmq", "logviewer.appender.name" "A1", "storm.messaging.netty.max_wait_ms" 1000, "drpc.request.timeout.secs" 600, "storm.local.mode.zmq" false, "ui.port" 8080, "nimbus.childopts" "-Xmx1024m", "storm.cluster.mode" "local", "topology.optimize" true, "topology.max.task.parallelism" nil}
+2513 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2516 [storm.starter.ExclamationTopology.main()-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+2518 [storm.starter.ExclamationTopology.main()] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+2525 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Starting supervisor with id 74112f72-269f-467f-87b0-b964aad56f30 at host dhcp-13-187.lip.ens-lyon.fr
+
+============== NIMBUS receives topology submission ===================================================
+
+2563 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Received topology submission for test with conf {"topology.max.task.parallelism" nil, "topology.acker.executors" nil, "topology.kryo.register" nil, "topology.kryo.decorators" (), "topology.name" "test", "storm.id" "test-1-1395848903", "topology.debug" true}
+2580 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Activating test: test-1-1395848903
+
+======= The scheduler lists available slots; these are (supervisor, number_of_slots) pairs ============
+------- There are 15 slots in the second supervisor and 6 slots in the first supervisor ---------------
+
+2647 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.scheduler.EvenScheduler - Available slots: (["74112f72-269f-467f-87b0-b964aad56f30" 4] ["74112f72-269f-467f-87b0-b964aad56f30" 5] ["74112f72-269f-467f-87b0-b964aad56f30" 6] ["ab57c0b7-df6a-4bc2-9d0a-84abcaa08a76" 1] ["ab57c0b7-df6a-4bc2-9d0a-84abcaa08a76" 2] ["ab57c0b7-df6a-4bc2-9d0a-84abcaa08a76" 3])
+2662 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Setting new assignment for topology id test-1-1395848903: #backtype.storm.daemon.common.Assignment{:master-code-dir "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//cd79cd2a-88c7-49a6-8dba-6dd0590ac0cd/nimbus/stormdist/test-1-1395848903", :node->host {"74112f72-269f-467f-87b0-b964aad56f30" "dhcp-13-187.lip.ens-lyon.fr"}, :executor->node+port {[2 2] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [3 3] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [4 4] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [5 5] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [6 6] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [7 7] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [8 8] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [9 9] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [10 10] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [11 11] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [12 12] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [13 13] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [14 14] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [15 15] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [16 16] ["74112f72-269f-467f-87b0-b964aad56f30" 4], [1 1] ["74112f72-269f-467f-87b0-b964aad56f30" 4]}, :executor->start-time-secs {[2 2] 1395848903, [3 3] 1395848903, [4 4] 1395848903, [5 5] 1395848903, [6 6] 1395848903, [7 7] 1395848903, [8 8] 1395848903, [9 9] 1395848903, [10 10] 1395848903, [11 11] 1395848903, [12 12] 1395848903, [13 13] 1395848903, [14 14] 1395848903, [15 15] 1395848903, [16 16] 1395848903, [1 1] 1395848903}}
+
+------- Supervisor downloads code from a directory ----------------------------------------------------
+
+3523 [Thread-11] INFO  backtype.storm.daemon.supervisor - Downloading code for storm id test-1-1395848903 from /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//cd79cd2a-88c7-49a6-8dba-6dd0590ac0cd/nimbus/stormdist/test-1-1395848903
+3529 [Thread-11] INFO  backtype.storm.daemon.supervisor - Copying resources at file:/Users/Przemek/Workspaces/storm/storm-starter/target/classes/resources to /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2e414e76-03cf-40ac-b6a0-5fb55ea285db/supervisor/stormdist/test-1-1395848903/resources
+3530 [Thread-11] INFO  backtype.storm.daemon.supervisor - Finished downloading code for storm id test-1-1395848903 from /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//cd79cd2a-88c7-49a6-8dba-6dd0590ac0cd/nimbus/stormdist/test-1-1395848903
+
+------ Supervisor launches a worker with the given assignment in Thread-12 -----------------------
+
+3543 [Thread-12] INFO  backtype.storm.daemon.supervisor - Launching worker with assignment #backtype.storm.daemon.supervisor.LocalAssignment{:storm-id "test-1-1395848903", :executors ([2 2] [3 3] [4 4] [5 5] [6 6] [7 7] [8 8] [9 9] [10 10] [11 11] [12 12] [13 13] [14 14] [15 15] [16 16] [1 1])} for this supervisor 74112f72-269f-467f-87b0-b964aad56f30 on port 4 with id 752bdcb2-1152-4164-afec-3471410c4392
+3545 [Thread-12] INFO  backtype.storm.daemon.worker - Launching worker for test-1-1395848903 on 74112f72-269f-467f-87b0-b964aad56f30:4 with id 752bdcb2-1152-4164-afec-3471410c4392 and conf {"dev.zookeeper.path" "/tmp/dev-storm-zookeeper", "topology.tick.tuple.freq.secs" nil, "topology.builtin.metrics.bucket.size.secs" 60, "topology.fall.back.on.java.serialization" true, "topology.max.error.report.per.interval" 5, "zmq.linger.millis" 0, "topology.skip.missing.kryo.registrations" true, "storm.messaging.netty.client_worker_threads" 1, "ui.childopts" "-Xmx768m", "storm.zookeeper.session.timeout" 20000, "nimbus.reassign" true, "topology.trident.batch.emit.interval.millis" 50, "nimbus.monitor.freq.secs" 10, "logviewer.childopts" "-Xmx128m", "java.library.path" "/usr/local/lib:/opt/local/lib:/usr/lib", "topology.executor.send.buffer.size" 1024, "storm.local.dir" "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2e414e76-03cf-40ac-b6a0-5fb55ea285db", "storm.messaging.netty.buffer_size" 5242880, "supervisor.worker.start.timeout.secs" 120, "topology.enable.message.timeouts" true, "nimbus.cleanup.inbox.freq.secs" 600, "nimbus.inbox.jar.expiration.secs" 3600, "drpc.worker.threads" 64, "topology.worker.shared.thread.pool.size" 4, "nimbus.host" "localhost", "storm.messaging.netty.min_wait_ms" 100, "storm.zookeeper.port" 2000, "transactional.zookeeper.port" nil, "topology.executor.receive.buffer.size" 1024, "transactional.zookeeper.servers" nil, "storm.zookeeper.root" "/storm", "storm.zookeeper.retry.intervalceiling.millis" 30000, "supervisor.enable" true, "storm.messaging.netty.server_worker_threads" 1, "storm.zookeeper.servers" ["localhost"], "transactional.zookeeper.root" "/transactional", "topology.acker.executors" nil, "topology.transfer.buffer.size" 1024, "topology.worker.childopts" nil, "drpc.queue.size" 128, "worker.childopts" "-Xmx768m", "supervisor.heartbeat.frequency.secs" 5, "topology.error.throttle.interval.secs" 10, "zmq.hwm" 0, "drpc.port" 3772, "supervisor.monitor.frequency.secs" 3, "drpc.childopts" "-Xmx768m", "topology.receiver.buffer.size" 8, "task.heartbeat.frequency.secs" 3, "topology.tasks" nil, "storm.messaging.netty.max_retries" 30, "topology.spout.wait.strategy" "backtype.storm.spout.SleepSpoutWaitStrategy", "topology.max.spout.pending" nil, "storm.zookeeper.retry.interval" 1000, "topology.sleep.spout.wait.strategy.time.ms" 1, "nimbus.topology.validator" "backtype.storm.nimbus.DefaultTopologyValidator", "supervisor.slots.ports" (4 5 6), "topology.debug" false, "nimbus.task.launch.secs" 120, "nimbus.supervisor.timeout.secs" 60, "topology.message.timeout.secs" 30, "task.refresh.poll.secs" 10, "topology.workers" 1, "supervisor.childopts" "-Xmx256m", "nimbus.thrift.port" 6627, "topology.stats.sample.rate" 0.05, "worker.heartbeat.frequency.secs" 1, "topology.tuple.serializer" "backtype.storm.serialization.types.ListDelegateSerializer", "topology.disruptor.wait.strategy" "com.lmax.disruptor.BlockingWaitStrategy", "nimbus.task.timeout.secs" 30, "storm.zookeeper.connection.timeout" 15000, "topology.kryo.factory" "backtype.storm.serialization.DefaultKryoFactory", "drpc.invocations.port" 3773, "logviewer.port" 8000, "zmq.threads" 1, "storm.zookeeper.retry.times" 5, "storm.thrift.transport" "backtype.storm.security.auth.SimpleTransportPlugin", "topology.state.synchronization.timeout.secs" 60, "supervisor.worker.timeout.secs" 30, "nimbus.file.copy.expiration.secs" 600, "storm.messaging.transport" "backtype.storm.messaging.zmq", "logviewer.appender.name" "A1", "storm.messaging.netty.max_wait_ms" 1000, "drpc.request.timeout.secs" 600, "storm.local.mode.zmq" false, "ui.port" 8080, "nimbus.childopts" "-Xmx1024m", "storm.cluster.mode" "local", "topology.optimize" true, "topology.max.task.parallelism" nil}
+3546 [Thread-12] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+3548 [Thread-12-EventThread] INFO  backtype.storm.zookeeper - Zookeeper state update: :connected:none
+3551 [Thread-12] INFO  com.netflix.curator.framework.imps.CuratorFrameworkImpl - Starting
+
+=============== Bolt 'exclaim1' - creating 3 task threads (exclaim1:[2 2] to exclaim2:[4 4]) =======================================
+
+3694 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor exclaim1:[2 2]
+3700 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: exclaim1 __system ["startup"]
+3700 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks exclaim1:[2 2]
+3710 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor exclaim1:[2 2]
+3711 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Preparing bolt exclaim1:(2)
+3715 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Prepared bolt exclaim1:(2)
+3717 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor exclaim1:[3 3]
+3717 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: exclaim1 __system ["startup"]
+3717 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks exclaim1:[3 3]
+3719 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor exclaim1:[3 3]
+3719 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Preparing bolt exclaim1:(3)
+3719 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Prepared bolt exclaim1:(3)
+3723 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor exclaim1:[4 4]
+3724 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: exclaim1 __system ["startup"]
+3724 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks exclaim1:[4 4]
+3726 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor exclaim1:[4 4]
+3726 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Preparing bolt exclaim1:(4)
+3726 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Prepared bolt exclaim1:(4)
+
+=============== Bolt 'exclaim2' - creating 2 task threads (exclaim2:[5 5] to exclaim2:[6 6]) =======================================
+
+3730 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor exclaim2:[5 5]
+3731 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: exclaim2 __system ["startup"]
+3731 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks exclaim2:[5 5]
+3732 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor exclaim2:[5 5]
+3732 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Preparing bolt exclaim2:(5)
+3733 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Prepared bolt exclaim2:(5)
+3737 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor exclaim2:[6 6]
+3737 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: exclaim2 __system ["startup"]
+3737 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks exclaim2:[6 6]
+3738 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor exclaim2:[6 6]
+3738 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Preparing bolt exclaim2:(6)
+3739 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Prepared bolt exclaim2:(6)
+
+============= Spout 'word' - creating 10 task threads (word:[7 7] to word:[16 16]) ==========================================
+
+3743 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[7 7]
+3743 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3743 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[7 7]
+3748 [Thread-29-word] INFO  backtype.storm.daemon.executor - Opening spout word:(7)
+3749 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[7 7]
+3749 [Thread-29-word] INFO  backtype.storm.daemon.executor - Opened spout word:(7)
+3751 [Thread-29-word] INFO  backtype.storm.daemon.executor - Activating spout word:(7)
+3753 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[8 8]
+3753 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3754 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[8 8]
+3755 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[8 8]
+3755 [Thread-31-word] INFO  backtype.storm.daemon.executor - Opening spout word:(8)
+3756 [Thread-31-word] INFO  backtype.storm.daemon.executor - Opened spout word:(8)
+3756 [Thread-31-word] INFO  backtype.storm.daemon.executor - Activating spout word:(8)
+3759 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[9 9]
+3759 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3759 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[9 9]
+3761 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[9 9]
+3761 [Thread-33-word] INFO  backtype.storm.daemon.executor - Opening spout word:(9)
+3762 [Thread-33-word] INFO  backtype.storm.daemon.executor - Opened spout word:(9)
+3762 [Thread-33-word] INFO  backtype.storm.daemon.executor - Activating spout word:(9)
+3767 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[10 10]
+3767 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3767 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[10 10]
+3768 [Thread-35-word] INFO  backtype.storm.daemon.executor - Opening spout word:(10)
+3768 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[10 10]
+3768 [Thread-35-word] INFO  backtype.storm.daemon.executor - Opened spout word:(10)
+3768 [Thread-35-word] INFO  backtype.storm.daemon.executor - Activating spout word:(10)
+3771 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[11 11]
+3772 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3772 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[11 11]
+3773 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[11 11]
+3773 [Thread-37-word] INFO  backtype.storm.daemon.executor - Opening spout word:(11)
+3773 [Thread-37-word] INFO  backtype.storm.daemon.executor - Opened spout word:(11)
+3773 [Thread-37-word] INFO  backtype.storm.daemon.executor - Activating spout word:(11)
+3776 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[12 12]
+3777 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3777 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[12 12]
+3778 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[12 12]
+3778 [Thread-39-word] INFO  backtype.storm.daemon.executor - Opening spout word:(12)
+3778 [Thread-39-word] INFO  backtype.storm.daemon.executor - Opened spout word:(12)
+3778 [Thread-39-word] INFO  backtype.storm.daemon.executor - Activating spout word:(12)
+3781 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[13 13]
+3782 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3782 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[13 13]
+3783 [Thread-41-word] INFO  backtype.storm.daemon.executor - Opening spout word:(13)
+3783 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[13 13]
+3783 [Thread-41-word] INFO  backtype.storm.daemon.executor - Opened spout word:(13)
+3783 [Thread-41-word] INFO  backtype.storm.daemon.executor - Activating spout word:(13)
+3786 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[14 14]
+3787 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3787 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[14 14]
+3788 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[14 14]
+3788 [Thread-43-word] INFO  backtype.storm.daemon.executor - Opening spout word:(14)
+3789 [Thread-43-word] INFO  backtype.storm.daemon.executor - Opened spout word:(14)
+3789 [Thread-43-word] INFO  backtype.storm.daemon.executor - Activating spout word:(14)
+3792 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[15 15]
+3792 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3792 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[15 15]
+3793 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[15 15]
+3793 [Thread-45-word] INFO  backtype.storm.daemon.executor - Opening spout word:(15)
+3794 [Thread-45-word] INFO  backtype.storm.daemon.executor - Opened spout word:(15)
+3794 [Thread-45-word] INFO  backtype.storm.daemon.executor - Activating spout word:(15)
+3798 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor word:[16 16]
+3798 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: word __system ["startup"]
+3799 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks word:[16 16]
+3800 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor word:[16 16]
+3800 [Thread-47-word] INFO  backtype.storm.daemon.executor - Opening spout word:(16)
+3800 [Thread-47-word] INFO  backtype.storm.daemon.executor - Opened spout word:(16)
+3800 [Thread-47-word] INFO  backtype.storm.daemon.executor - Activating spout word:(16)
+
+========= Creating thread for bolt __system:[-1 -1] =====================
+
+3803 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor __system:[-1 -1]
+3804 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: __system __system ["startup"]
+3804 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks __system:[-1 -1]
+3805 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor __system:[-1 -1]
+3805 [Thread-49-__system] INFO  backtype.storm.daemon.executor - Preparing bolt __system:(-1)
+3808 [Thread-49-__system] INFO  backtype.storm.daemon.executor - Prepared bolt __system:(-1)
+
+========= Creating thread for bolt __acker:[1 1] =================
+
+3809 [Thread-12] INFO  backtype.storm.daemon.executor - Loading executor __acker:[1 1]
+3810 [Thread-12] INFO  backtype.storm.daemon.task - Emitting: __acker __system ["startup"]
+3810 [Thread-12] INFO  backtype.storm.daemon.executor - Loaded executor tasks __acker:[1 1]
+3811 [Thread-12] INFO  backtype.storm.daemon.executor - Timeouts disabled for executor __acker:[1 1]
+3811 [Thread-51-__acker] INFO  backtype.storm.daemon.executor - Preparing bolt __acker:(1)
+3811 [Thread-12] INFO  backtype.storm.daemon.executor - Finished loading executor __acker:[1 1]
+3811 [Thread-12] INFO  backtype.storm.daemon.worker - Launching receive-thread for 74112f72-269f-467f-87b0-b964aad56f30:4
+3813 [Thread-51-__acker] INFO  backtype.storm.daemon.executor - Prepared bolt __acker:(1)
+3820 [Thread-12] INFO  backtype.storm.daemon.worker - Worker has topology config {"storm.id" "test-1-1395848903", "dev.zookeeper.path" "/tmp/dev-storm-zookeeper", "topology.tick.tuple.freq.secs" nil, "topology.builtin.metrics.bucket.size.secs" 60, "topology.fall.back.on.java.serialization" true, "topology.max.error.report.per.interval" 5, "zmq.linger.millis" 0, "topology.skip.missing.kryo.registrations" true, "storm.messaging.netty.client_worker_threads" 1, "ui.childopts" "-Xmx768m", "storm.zookeeper.session.timeout" 20000, "nimbus.reassign" true, "topology.trident.batch.emit.interval.millis" 50, "nimbus.monitor.freq.secs" 10, "logviewer.childopts" "-Xmx128m", "java.library.path" "/usr/local/lib:/opt/local/lib:/usr/lib", "topology.executor.send.buffer.size" 1024, "storm.local.dir" "/var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2e414e76-03cf-40ac-b6a0-5fb55ea285db", "storm.messaging.netty.buffer_size" 5242880, "supervisor.worker.start.timeout.secs" 120, "topology.enable.message.timeouts" true, "nimbus.cleanup.inbox.freq.secs" 600, "nimbus.inbox.jar.expiration.secs" 3600, "drpc.worker.threads" 64, "topology.worker.shared.thread.pool.size" 4, "nimbus.host" "localhost", "storm.messaging.netty.min_wait_ms" 100, "storm.zookeeper.port" 2000, "transactional.zookeeper.port" nil, "topology.executor.receive.buffer.size" 1024, "transactional.zookeeper.servers" nil, "storm.zookeeper.root" "/storm", "storm.zookeeper.retry.intervalceiling.millis" 30000, "supervisor.enable" true, "storm.messaging.netty.server_worker_threads" 1, "storm.zookeeper.servers" ["localhost"], "transactional.zookeeper.root" "/transactional", "topology.acker.executors" nil, "topology.kryo.decorators" (), "topology.name" "test", "topology.transfer.buffer.size" 1024, "topology.worker.childopts" nil, "drpc.queue.size" 128, "worker.childopts" "-Xmx768m", "supervisor.heartbeat.frequency.secs" 5, "topology.error.throttle.interval.secs" 10, "zmq.hwm" 0, "drpc.port" 3772, "supervisor.monitor.frequency.secs" 3, "drpc.childopts" "-Xmx768m", "topology.receiver.buffer.size" 8, "task.heartbeat.frequency.secs" 3, "topology.tasks" nil, "storm.messaging.netty.max_retries" 30, "topology.spout.wait.strategy" "backtype.storm.spout.SleepSpoutWaitStrategy", "topology.max.spout.pending" nil, "storm.zookeeper.retry.interval" 1000, "topology.sleep.spout.wait.strategy.time.ms" 1, "nimbus.topology.validator" "backtype.storm.nimbus.DefaultTopologyValidator", "supervisor.slots.ports" (4 5 6), "topology.debug" true, "nimbus.task.launch.secs" 120, "nimbus.supervisor.timeout.secs" 60, "topology.kryo.register" nil, "topology.message.timeout.secs" 30, "task.refresh.poll.secs" 10, "topology.workers" 1, "supervisor.childopts" "-Xmx256m", "nimbus.thrift.port" 6627, "topology.stats.sample.rate" 0.05, "worker.heartbeat.frequency.secs" 1, "topology.tuple.serializer" "backtype.storm.serialization.types.ListDelegateSerializer", "topology.disruptor.wait.strategy" "com.lmax.disruptor.BlockingWaitStrategy", "nimbus.task.timeout.secs" 30, "storm.zookeeper.connection.timeout" 15000, "topology.kryo.factory" "backtype.storm.serialization.DefaultKryoFactory", "drpc.invocations.port" 3773, "logviewer.port" 8000, "zmq.threads" 1, "storm.zookeeper.retry.times" 5, "storm.thrift.transport" "backtype.storm.security.auth.SimpleTransportPlugin", "topology.state.synchronization.timeout.secs" 60, "supervisor.worker.timeout.secs" 30, "nimbus.file.copy.expiration.secs" 600, "storm.messaging.transport" "backtype.storm.messaging.zmq", "logviewer.appender.name" "A1", "storm.messaging.netty.max_wait_ms" 1000, "drpc.request.timeout.secs" 600, "storm.local.mode.zmq" false, "ui.port" 8080, "nimbus.childopts" "-Xmx1024m", "storm.cluster.mode" "local", "topology.optimize" true, "topology.max.task.parallelism" nil}
+3820 [Thread-12] INFO  backtype.storm.daemon.worker - Worker 752bdcb2-1152-4164-afec-3471410c4392 for storm test-1-1395848903 on 74112f72-269f-467f-87b0-b964aad56f30:4 has finished loading
+
+======== Finished loading the WORKER PROCESS =========================
+
+3852 [Thread-29-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3854 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:7, stream: default, id: {}, [golda]
+3854 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3854 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [golda!!!]
+3854 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3857 [Thread-31-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3857 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:8, stream: default, id: {}, [golda]
+3857 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3857 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [golda!!!]
+3857 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3863 [Thread-33-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3863 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:9, stream: default, id: {}, [golda]
+3863 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3863 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [golda!!!]
+3863 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3870 [Thread-35-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3871 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:10, stream: default, id: {}, [bertels]
+3871 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3872 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [bertels!!!]
+3872 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3874 [Thread-37-word] INFO  backtype.storm.daemon.task - Emitting: word default [mike]
+3874 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:11, stream: default, id: {}, [mike]
+3874 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [mike!!!]
+3875 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [mike!!!]
+3875 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [mike!!!!!!]
+3878 [Thread-39-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3879 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:12, stream: default, id: {}, [golda]
+3879 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3879 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [golda!!!]
+3879 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3884 [Thread-41-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3884 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:13, stream: default, id: {}, [bertels]
+3884 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3884 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [bertels!!!]
+3884 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3889 [Thread-43-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3890 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:14, stream: default, id: {}, [bertels]
+3890 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3890 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [bertels!!!]
+3890 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3895 [Thread-45-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+3895 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:15, stream: default, id: {}, [jackson]
+3895 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+3896 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [jackson!!!]
+3896 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+3901 [Thread-47-word] INFO  backtype.storm.daemon.task - Emitting: word default [mike]
+3901 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:16, stream: default, id: {}, [mike]
+3901 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [mike!!!]
+3901 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [mike!!!]
+3901 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [mike!!!!!!]
+3954 [Thread-29-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+3954 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:7, stream: default, id: {}, [jackson]
+3955 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+3955 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [jackson!!!]
+3955 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+3958 [Thread-31-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+3959 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:8, stream: default, id: {}, [jackson]
+3959 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+3959 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [jackson!!!]
+3959 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+3964 [Thread-33-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+3964 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:9, stream: default, id: {}, [jackson]
+3965 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+3965 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [jackson!!!]
+3965 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+3972 [Thread-35-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3973 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:10, stream: default, id: {}, [golda]
+3973 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3973 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [golda!!!]
+3973 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3974 [Thread-37-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3975 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:11, stream: default, id: {}, [bertels]
+3975 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3975 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [bertels!!!]
+3975 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3979 [Thread-39-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3980 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:12, stream: default, id: {}, [golda]
+3980 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3980 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [golda!!!]
+3980 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+3984 [Thread-41-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3984 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:13, stream: default, id: {}, [bertels]
+3985 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3985 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [bertels!!!]
+3985 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3991 [Thread-43-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+3991 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:14, stream: default, id: {}, [bertels]
+3991 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+3991 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [bertels!!!]
+3992 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+3996 [Thread-45-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+3996 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:15, stream: default, id: {}, [golda]
+3996 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+3996 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [golda!!!]
+3996 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+4002 [Thread-47-word] INFO  backtype.storm.daemon.task - Emitting: word default [nathan]
+4002 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:16, stream: default, id: {}, [nathan]
+4002 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [nathan!!!]
+4003 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [nathan!!!]
+4003 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [nathan!!!!!!]
+4054 [Thread-29-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+4055 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:7, stream: default, id: {}, [golda]
+4055 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+4055 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [golda!!!]
+4055 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+4060 [Thread-31-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+4060 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:8, stream: default, id: {}, [jackson]
+4060 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+4060 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [jackson!!!]
+4060 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+4065 [Thread-33-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+4066 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:9, stream: default, id: {}, [jackson]
+4066 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+4066 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [jackson!!!]
+4066 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+4074 [Thread-35-word] INFO  backtype.storm.daemon.task - Emitting: word default [bertels]
+4074 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:10, stream: default, id: {}, [bertels]
+4074 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [bertels!!!]
+4074 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [bertels!!!]
+4074 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [bertels!!!!!!]
+4075 [Thread-37-word] INFO  backtype.storm.daemon.task - Emitting: word default [nathan]
+4075 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:11, stream: default, id: {}, [nathan]
+4075 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [nathan!!!]
+4075 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [nathan!!!]
+4076 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [nathan!!!!!!]
+4080 [Thread-39-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+4080 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:12, stream: default, id: {}, [golda]
+4080 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [golda!!!]
+4081 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [golda!!!]
+4081 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [golda!!!!!!]
+
+========== The NIMBUS (in the main thread) is told told to kill the topology ================
+
+4083 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Delaying event :remove for 30 secs for test-1-1395848903
+4085 [Thread-41-word] INFO  backtype.storm.daemon.task - Emitting: word default [nathan]
+4086 [Thread-21-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:13, stream: default, id: {}, [nathan]
+4086 [Thread-21-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [nathan!!!]
+4086 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:3, stream: default, id: {}, [nathan!!!]
+4086 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [nathan!!!!!!]
+4086 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Updated test-1-1395848903 with status {:type :killed, :kill-time-secs 30}
+4087 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Shutting down master
+4092 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.nimbus - Shut down master
+4092 [Thread-43-word] INFO  backtype.storm.daemon.task - Emitting: word default [nathan]
+4092 [Thread-19-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:14, stream: default, id: {}, [nathan]
+4092 [Thread-19-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [nathan!!!]
+4093 [Thread-25-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:2, stream: default, id: {}, [nathan!!!]
+4093 [Thread-25-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [nathan!!!!!!]
+
+------ Shutting down the SUPERVISORs --------------------
+
+4095 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Shutting down supervisor ab57c0b7-df6a-4bc2-9d0a-84abcaa08a76
+4096 [Thread-8] INFO  backtype.storm.event - Event manager interrupted
+4096 [Thread-9] INFO  backtype.storm.event - Event manager interrupted
+4096 [Thread-45-word] INFO  backtype.storm.daemon.task - Emitting: word default [jackson]
+4096 [Thread-23-exclaim1] INFO  backtype.storm.daemon.executor - Processing received message source: word:15, stream: default, id: {}, [jackson]
+4096 [Thread-23-exclaim1] INFO  backtype.storm.daemon.task - Emitting: exclaim1 default [jackson!!!]
+4097 [Thread-27-exclaim2] INFO  backtype.storm.daemon.executor - Processing received message source: exclaim1:4, stream: default, id: {}, [jackson!!!]
+4097 [Thread-27-exclaim2] INFO  backtype.storm.daemon.task - Emitting: exclaim2 default [jackson!!!!!!]
+4097 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Shutting down 74112f72-269f-467f-87b0-b964aad56f30:752bdcb2-1152-4164-afec-3471410c4392
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.process-simulator - Killing process a5c6e780-68c6-409f-9564-c2d21625ce5e
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shutting down worker test-1-1395848903 74112f72-269f-467f-87b0-b964aad56f30 4
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shutting down receive thread
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.messaging.loader - Shutting down receiving-thread: [test-1-1395848903, 4]
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.messaging.loader - Waiting for receiving-thread:[test-1-1395848903, 4] to die
+4098 [Thread-52] INFO  backtype.storm.messaging.loader - Receiving-thread:[test-1-1395848903, 4] received shutdown notice
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.messaging.loader - Shutdown receiving-thread: [test-1-1395848903, 4]
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shut down receive thread
+4098 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Terminating messaging context
+4099 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shutting down executors
+4099 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor exclaim1:[2 2]
+4099 [Thread-19-exclaim1] INFO  backtype.storm.util - Async loop interrupted!
+4099 [Thread-18] INFO  backtype.storm.util - Async loop interrupted!
+4099 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor exclaim1:[2 2]
+4100 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor exclaim1:[3 3]
+4100 [Thread-21-exclaim1] INFO  backtype.storm.util - Async loop interrupted!
+4100 [Thread-20] INFO  backtype.storm.util - Async loop interrupted!
+4100 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor exclaim1:[3 3]
+4100 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor exclaim1:[4 4]
+4100 [Thread-23-exclaim1] INFO  backtype.storm.util - Async loop interrupted!
+4100 [Thread-22] INFO  backtype.storm.util - Async loop interrupted!
+4100 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor exclaim1:[4 4]
+4100 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor exclaim2:[5 5]
+4101 [Thread-25-exclaim2] INFO  backtype.storm.util - Async loop interrupted!
+4101 [Thread-24] INFO  backtype.storm.util - Async loop interrupted!
+4101 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor exclaim2:[5 5]
+4101 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor exclaim2:[6 6]
+4101 [Thread-27-exclaim2] INFO  backtype.storm.util - Async loop interrupted!
+4101 [Thread-26] INFO  backtype.storm.util - Async loop interrupted!
+4101 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor exclaim2:[6 6]
+4101 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[7 7]
+4101 [Thread-29-word] INFO  backtype.storm.util - Async loop interrupted!
+4101 [Thread-28] INFO  backtype.storm.util - Async loop interrupted!
+4102 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[7 7]
+4102 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[8 8]
+4102 [Thread-31-word] INFO  backtype.storm.util - Async loop interrupted!
+4102 [Thread-30] INFO  backtype.storm.util - Async loop interrupted!
+4102 [Thread-47-word] INFO  backtype.storm.daemon.task - Emitting: word default [golda]
+4102 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[8 8]
+4103 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[9 9]
+4103 [Thread-32] INFO  backtype.storm.util - Async loop interrupted!
+4103 [Thread-33-word] INFO  backtype.storm.util - Async loop interrupted!
+4103 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[9 9]
+4103 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[10 10]
+4104 [Thread-35-word] INFO  backtype.storm.util - Async loop interrupted!
+4104 [Thread-34] INFO  backtype.storm.util - Async loop interrupted!
+4104 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[10 10]
+4104 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[11 11]
+4105 [Thread-37-word] INFO  backtype.storm.util - Async loop interrupted!
+4105 [Thread-36] INFO  backtype.storm.util - Async loop interrupted!
+4106 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[11 11]
+4106 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[12 12]
+4106 [Thread-39-word] INFO  backtype.storm.util - Async loop interrupted!
+4106 [Thread-38] INFO  backtype.storm.util - Async loop interrupted!
+4106 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[12 12]
+4106 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[13 13]
+4107 [Thread-41-word] INFO  backtype.storm.util - Async loop interrupted!
+4107 [Thread-40] INFO  backtype.storm.util - Async loop interrupted!
+4107 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[13 13]
+4107 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[14 14]
+4107 [Thread-43-word] INFO  backtype.storm.util - Async loop interrupted!
+4107 [Thread-42] INFO  backtype.storm.util - Async loop interrupted!
+4108 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[14 14]
+4108 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[15 15]
+4108 [Thread-45-word] INFO  backtype.storm.util - Async loop interrupted!
+4108 [Thread-44] INFO  backtype.storm.util - Async loop interrupted!
+4108 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[15 15]
+4108 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor word:[16 16]
+4108 [Thread-46] INFO  backtype.storm.util - Async loop interrupted!
+4108 [Thread-47-word] INFO  backtype.storm.util - Async loop interrupted!
+4108 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor word:[16 16]
+4109 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor __system:[-1 -1]
+4109 [Thread-49-__system] INFO  backtype.storm.util - Async loop interrupted!
+4109 [Thread-48] INFO  backtype.storm.util - Async loop interrupted!
+4109 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor __system:[-1 -1]
+4109 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shutting down executor __acker:[1 1]
+4109 [Thread-51-__acker] INFO  backtype.storm.util - Async loop interrupted!
+4110 [Thread-50] INFO  backtype.storm.util - Async loop interrupted!
+4110 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.executor - Shut down executor __acker:[1 1]
+4110 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shut down executors
+
+============ all EXECUTOR threads have been shut down ====================
+
+4110 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shutting down transfer thread
+4110 [Thread-53] INFO  backtype.storm.util - Async loop interrupted!
+4110 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shut down transfer thread
+4111 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shutting down default resources
+4111 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shut down default resources
+4117 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Disconnecting from storm cluster state context
+4118 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.worker - Shut down worker test-1-1395848903 74112f72-269f-467f-87b0-b964aad56f30 4
+4119 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Shut down 74112f72-269f-467f-87b0-b964aad56f30:752bdcb2-1152-4164-afec-3471410c4392
+4119 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.daemon.supervisor - Shutting down supervisor 74112f72-269f-467f-87b0-b964aad56f30
+4120 [Thread-11] INFO  backtype.storm.event - Event manager interrupted
+4120 [Thread-12] INFO  backtype.storm.event - Event manager interrupted
+4121 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Shutting down in process zookeeper
+4122 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Done shutting down in process zookeeper
+4122 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Deleting temporary path /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//cd79cd2a-88c7-49a6-8dba-6dd0590ac0cd
+4123 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Deleting temporary path /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2c72121e-a5f5-4d9a-bd38-7a1b4d2afcda
+4123 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Deleting temporary path /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//9b562151-6f10-46c6-b254-bac9f5ab5e53
+4124 [storm.starter.ExclamationTopology.main()] INFO  backtype.storm.testing - Deleting temporary path /var/folders/h1/kv6dcyqj73x7qv9f0tp3fryc0000gp/T//2e414e76-03cf-40ac-b6a0-5fb55ea285db
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.826 s
+[INFO] Finished at: 2014-03-26T16:48:26+01:00
+[INFO] Final Memory: 26M/114M
+[INFO] ------------------------------------------------------------------------
+
