@@ -1,6 +1,8 @@
 package fr.inria.streaming.examples.utils;
 
-public interface TextContentReader {
+import java.io.Serializable;
+
+public interface TextContentReader extends Serializable{
 
 	static class NoContentAvailableException extends Exception {
 		

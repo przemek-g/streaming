@@ -32,7 +32,7 @@ public class TextContentSpout extends BaseRichSpout {
 			String content = this.textContentReader.getContent();
 			this.collector.emit(new Values(content));
 		} catch (NoContentAvailableException e) {
-			logger.error("Content not available for streaming", e);
+			logger.error("Content not available for streaming");
 		}
 	}
 

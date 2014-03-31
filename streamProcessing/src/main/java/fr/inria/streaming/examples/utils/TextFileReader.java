@@ -1,10 +1,13 @@
 package fr.inria.streaming.examples.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TextFileReader implements TextContentReader{
+
+	/**
+	 * generated serial version uid
+	 */
+	private static final long serialVersionUID = -3107671016272213171L;
 
 	private String fileName;
 	private Scanner fileScanner;
