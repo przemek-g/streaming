@@ -16,6 +16,8 @@ import fr.inria.streaming.examples.utils.TextContentReader.NoContentAvailableExc
 
 public class TextContentSpout extends BaseRichSpout {
 	
+	private static final long serialVersionUID = -2314788623424320028L;
+
 	private static Logger logger = Logger.getLogger(TextContentSpout.class);
 	
 	private TextContentReader textContentReader;
@@ -43,7 +45,7 @@ public class TextContentSpout extends BaseRichSpout {
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		declarer.declare(new Fields("word"));
+		declarer.declare(new Fields("line"));
 	}
 
 }

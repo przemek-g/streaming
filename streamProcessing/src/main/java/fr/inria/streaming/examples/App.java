@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
+import fr.inria.streaming.examples.bolt.SentenceSplittingBolt;
+import fr.inria.streaming.examples.bolt.WordStemmingBolt;
 import fr.inria.streaming.examples.spout.TextContentSpout;
 import fr.inria.streaming.examples.utils.TextFileReader;
 
@@ -57,7 +59,9 @@ public class App
     	
     	logger.info("The file name is "+fileName);
     	
-        builder.setSpout("spout", new TextContentSpout(new TextFileReader(fileName)),1); 
+        builder.setSpout("text-spout", new TextContentSpout(new TextFileReader(fileName)),1); 
+        builder.setBolt("splitter-bolt", new SentenceSplittingBolt(), 4).shuffleGrouping("text-spout");
+        builder.setBolt("stemmer-bolt", new WordStemmingBolt()).shuffleGrouping("splitter-bolt");
 
         Config conf = new Config();
         conf.setDebug(true);

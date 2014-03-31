@@ -3,6 +3,7 @@ package fr.inria.streaming.examples.bolt;
 import java.util.Map;
 
 import fr.inria.streaming.examples.utils.PorterStemmer;
+import fr.inria.streaming.examples.utils.WordsRecognizer;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -16,6 +17,8 @@ public class WordStemmingBolt extends BaseRichBolt {
 	private static final long serialVersionUID = -7275390652127788057L;
 	private OutputCollector collector;
 	private PorterStemmer stemmer = new PorterStemmer();
+
+	private WordsRecognizer wr = new WordsRecognizer();
 	
 	@Override
 	public void execute(Tuple tuple) {
@@ -27,7 +30,9 @@ public class WordStemmingBolt extends BaseRichBolt {
 		String stemWord = this.stemmer.toString();
 		
 		// emit the stemmed form further
-		collector.emit(tuple, new Values(stemWord));
+		if (wr.isStringAWord(stemWord)) {
+			collector.emit(tuple, new Values(stemWord));
+		}
 	}
 
 	@Override
