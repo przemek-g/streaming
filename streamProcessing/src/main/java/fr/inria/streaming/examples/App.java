@@ -61,7 +61,7 @@ public class App
     	
         builder.setSpout("text-spout", new TextContentSpout(new TextFileReader(fileName)),1); 
         builder.setBolt("splitter-bolt", new SentenceSplittingBolt(), 4).shuffleGrouping("text-spout");
-        builder.setBolt("stemmer-bolt", new WordStemmingBolt()).shuffleGrouping("splitter-bolt");
+        builder.setBolt("stemmer-bolt", new WordStemmingBolt(),4).shuffleGrouping("splitter-bolt");
 
         Config conf = new Config();
         conf.setDebug(true);
@@ -70,7 +70,7 @@ public class App
         LocalCluster cluster = new LocalCluster();
         cluster.submitTopology("sample-streaming-topology", conf, builder.createTopology());
 
-        Thread.sleep(3000);
+        Thread.sleep(4000);
 
         cluster.shutdown();
     }

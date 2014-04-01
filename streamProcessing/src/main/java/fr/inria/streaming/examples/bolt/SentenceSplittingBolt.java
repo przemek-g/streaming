@@ -25,10 +25,6 @@ public class SentenceSplittingBolt extends BaseRichBolt {
 
 		String[] words = splitter.splitSentence(line);
 		
-		if (words == null) {
-			return;
-		}
-		
 		if (words != null) {
 			for (String word : words) {
 				collector.emit(tuple, new Values(word));

@@ -58,13 +58,14 @@ public class SentenceSplittingBoltTest {
 	@Test
 	public void shouldEmitNothingGivenImproperSentenceTuple() {
 		Tuple tuple = mock(Tuple.class);
-		when(tuple.getString(0)).thenReturn("");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		
 		SentenceSplittingBolt bolt = new SentenceSplittingBolt();
 		bolt.prepare(mock(Map.class), mock(TopologyContext.class), collector);
-		
+
+		// first case
+		when(tuple.getString(0)).thenReturn("");
 		bolt.execute(tuple);
 		
 		// another case
