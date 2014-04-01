@@ -21,13 +21,14 @@ public class SentenceSplittingBolt extends BaseRichBolt {
 	
 	@Override
 	public void execute(Tuple tuple) {
-		String line = tuple.getString(0);
+		String docId = tuple.getString(0);
+		String line = tuple.getString(1);
 
 		String[] words = splitter.splitSentence(line);
 		
 		if (words != null) {
 			for (String word : words) {
-				collector.emit(tuple, new Values(word));
+				collector.emit(tuple, new Values(docId,word));
 			}
 		}
 	}
@@ -39,7 +40,7 @@ public class SentenceSplittingBolt extends BaseRichBolt {
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer arg0) {
-		arg0.declare(new Fields("word"));
+		arg0.declare(new Fields("docId","word"));
 	}
 
 }

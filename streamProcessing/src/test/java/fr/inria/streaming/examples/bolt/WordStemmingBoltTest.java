@@ -51,7 +51,8 @@ public class WordStemmingBoltTest {
 	@Test
 	public void shouldEmitSomethingIfCorrectTupleReceived() {
 		Tuple tuple = mock(Tuple.class);
-		when(tuple.getString(0)).thenReturn("researchers");
+		when(tuple.getString(0)).thenReturn("non-relevant title");
+		when(tuple.getString(1)).thenReturn("researchers");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		
@@ -65,7 +66,8 @@ public class WordStemmingBoltTest {
 	@Test
 	public void shoudEmitNothingIfIncorrectTupleReceived() {
 		Tuple tuple = mock(Tuple.class);
-		when(tuple.getString(0)).thenReturn("some strange string");
+		when(tuple.getString(0)).thenReturn("non-relevant title");
+		when(tuple.getString(1)).thenReturn("some strange string");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		

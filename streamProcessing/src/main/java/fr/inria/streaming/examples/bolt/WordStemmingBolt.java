@@ -22,7 +22,8 @@ public class WordStemmingBolt extends BaseRichBolt {
 	
 	@Override
 	public void execute(Tuple tuple) {
-		String originalWord = tuple.getString(0);
+		String docId = tuple.getString(0);
+		String originalWord = tuple.getString(1);
 		
 		// stem this word
 		this.stemmer.add(originalWord.toCharArray(), originalWord.length());
@@ -31,7 +32,7 @@ public class WordStemmingBolt extends BaseRichBolt {
 		
 		// emit the stemmed form further
 		if (wr.isStringAWord(stemWord)) {
-			collector.emit(tuple, new Values(stemWord));
+			collector.emit(tuple, new Values(docId,stemWord));
 		}
 	}
 
@@ -42,7 +43,7 @@ public class WordStemmingBolt extends BaseRichBolt {
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer arg0) {
-		arg0.declare(new Fields("stemmed-word"));
+		arg0.declare(new Fields("docId","stemmed-word"));
 	}
 
 }

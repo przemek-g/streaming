@@ -28,7 +28,8 @@ public class SentenceSplittingBoltTest {
 	@Test
 	public void shouldEmitSomethingGivenProperSentenceTuple() {
 		Tuple tuple = mock(Tuple.class);
-		when(tuple.getString(0)).thenReturn("this is a good sentence, my young Padawan");
+		when(tuple.getString(0)).thenReturn("les dossiers secrets");
+		when(tuple.getString(1)).thenReturn("this is a good sentence, my young Padawan");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		
@@ -43,7 +44,8 @@ public class SentenceSplittingBoltTest {
 	@Test
 	public void shouldEmitSomethingGivenOneWordTuple() {
 		Tuple tuple = mock(Tuple.class);
-		when(tuple.getString(0)).thenReturn("\t thisIsASentenceConsistingOfJustOneSimpleAlthoughVeryLongWord\n\t");
+		when(tuple.getString(0)).thenReturn("les dossiers secrets");
+		when(tuple.getString(1)).thenReturn("\t thisIsASentenceConsistingOfJustOneSimpleAlthoughVeryLongWord\n\t");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		
@@ -58,6 +60,7 @@ public class SentenceSplittingBoltTest {
 	@Test
 	public void shouldEmitNothingGivenImproperSentenceTuple() {
 		Tuple tuple = mock(Tuple.class);
+		when(tuple.getString(0)).thenReturn("another document");
 		
 		OutputCollector collector = mock(OutputCollector.class);
 		
@@ -65,15 +68,15 @@ public class SentenceSplittingBoltTest {
 		bolt.prepare(mock(Map.class), mock(TopologyContext.class), collector);
 
 		// first case
-		when(tuple.getString(0)).thenReturn("");
+		when(tuple.getString(1)).thenReturn("");
 		bolt.execute(tuple);
 		
 		// another case
-		when(tuple.getString(0)).thenReturn(null);
+		when(tuple.getString(1)).thenReturn(null);
 		bolt.execute(tuple);
 
 		// another case
-		when(tuple.getString(0)).thenReturn("    ");
+		when(tuple.getString(1)).thenReturn("    ");
 		bolt.execute(tuple);
 		
 		// in any of these cases, we should not emit anything
