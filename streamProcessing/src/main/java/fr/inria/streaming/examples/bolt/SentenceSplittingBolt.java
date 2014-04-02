@@ -30,6 +30,7 @@ public class SentenceSplittingBolt extends BaseRichBolt {
 			for (String word : words) {
 				collector.emit(tuple, new Values(docId,word));
 			}
+			collector.ack(tuple); // acknowledge the tuple for Storm
 		}
 	}
 

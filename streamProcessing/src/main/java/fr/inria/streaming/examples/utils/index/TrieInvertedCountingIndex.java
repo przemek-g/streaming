@@ -1,6 +1,9 @@
 package fr.inria.streaming.examples.utils.index;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -11,6 +14,8 @@ public class TrieInvertedCountingIndex {
 	private static Logger logger = Logger.getLogger(TrieInvertedCountingIndex.class);
 	
 	private TrieNode root = new TrieNode();
+	
+	private Set<String> keys = new HashSet<String>();
 	
 	/**
 	 * Returns null if there is no record in this index corresponding to the given word
@@ -47,18 +52,26 @@ public class TrieInvertedCountingIndex {
 		}
 		
 		TrieNode currentNode = this.root;
+		char[] buf = new char[word.length()];
 		
 		for(int i=0; i<word.length(); i++) {
 			char c = word.charAt(i);
 			try {
-				currentNode.addDescendantFor(c);
-				currentNode = currentNode.getDescendantFor(c); // performs the check whether this add is unnecessary
+				currentNode.addDescendantFor(c); // performs the check whether this add is unnecessary
+				currentNode = currentNode.getDescendantFor(c);
+				buf[i] = currentNode.getLetter();
+				
 			} catch (ImproperLetterException e) { 
 				logger.warn("Attempted to add descendant for letter "+c+"to node "+currentNode.toString());
 			} 
 		}
 		
 		currentNode.increaseIndexEntryBy(docId, num);
+		this.keys.add(new String(buf)); // the Set implementation makes sure we only have each element added once
 		
+	}
+	
+	public Set<String> getKeys() {
+		return keys;
 	}
 }

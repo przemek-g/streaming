@@ -33,6 +33,7 @@ public class WordStemmingBolt extends BaseRichBolt {
 		// emit the stemmed form further
 		if (wr.isStringAWord(stemWord)) {
 			collector.emit(tuple, new Values(docId,stemWord));
+			collector.ack(tuple); // ack for Storm
 		}
 	}
 
