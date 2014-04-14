@@ -1,5 +1,12 @@
 package fr.inria.streaming.examples.spout;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -10,14 +17,13 @@ import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import fr.inria.streaming.examples.utils.TextFileReader;
-import static org.mockito.Mockito.*;
+import fr.inria.streaming.examples.spout.TextContentSpout.WrongFileNameException;
 
 public class TextContentSpoutTest {
 
 	@Test
-	public void shouldDeclareSomeFields() {
-		TextContentSpout spout = new TextContentSpout(new TextFileReader("nonExistentFile"));
+	public void shouldDeclareSomeFields() throws Exception {
+		TextContentSpout spout = new TextContentSpout("nonExistentFile");
 		OutputFieldsDeclarer declarer = mock(OutputFieldsDeclarer.class);
 		
 		spout.declareOutputFields(declarer);
@@ -25,8 +31,8 @@ public class TextContentSpoutTest {
 	}
 	
 	@Test
-	public void testWithoutFileToRead() {
-		TextContentSpout spout = new TextContentSpout(new TextFileReader("nonExistentFile"));
+	public void testWithoutFileToRead() throws Exception {
+		TextContentSpout spout = new TextContentSpout("nonExistentFile");
 		SpoutOutputCollector collector = mock(SpoutOutputCollector.class);
 		
 		spout.open(mock(Map.class), mock(TopologyContext.class), collector);
@@ -36,9 +42,19 @@ public class TextContentSpoutTest {
 		
 	}
 	
+	@Test(expected=WrongFileNameException.class)
+	public void shouldThrowExceptionWithNullFileName() throws Exception {
+		new TextContentSpout(null);
+	}
+	
+	@Test(expected=WrongFileNameException.class)
+	public void shouldThrowExceptionWithEmptyFileName() throws Exception {
+		new TextContentSpout("");
+	}
+	
 	@Test
-	public void testWithEmptyFileToRead() {
-		TextContentSpout spout = new TextContentSpout(new TextFileReader("empty-file.txt"));
+	public void testWithEmptyFileToRead() throws Exception {
+		TextContentSpout spout = new TextContentSpout("empty-file.txt");
 		SpoutOutputCollector collector = mock(SpoutOutputCollector.class);
 		
 		spout.open(mock(Map.class), mock(TopologyContext.class), collector);
@@ -48,8 +64,8 @@ public class TextContentSpoutTest {
 	}
 	
 	@Test
-	public void testWithSeveralLinesToRead() {
-		TextContentSpout spout = new TextContentSpout(new TextFileReader("five-lines-file.txt"));
+	public void testWithSeveralLinesToRead() throws Exception {
+		TextContentSpout spout = new TextContentSpout("five-lines-file.txt");
 		
 		SpoutOutputCollector collector = mock(SpoutOutputCollector.class);
 		when(collector.emit(any(Values.class))).thenReturn(new ArrayList<Integer>());

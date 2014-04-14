@@ -1,5 +1,6 @@
 package fr.inria.streaming.examples.utils.index;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,9 @@ import org.apache.log4j.Logger;
 
 import fr.inria.streaming.examples.utils.index.TrieNode.ImproperLetterException;
 
-public class TrieInvertedCountingIndex {
+public class TrieInvertedCountingIndex implements Serializable {
+
+	private static final long serialVersionUID = 700018987546438391L;
 
 	private static Logger logger = Logger.getLogger(TrieInvertedCountingIndex.class);
 	
@@ -38,7 +41,7 @@ public class TrieInvertedCountingIndex {
 			currentNode = currentNode.getDescendantFor(c);
 		}
 		
-		return currentNode.getIndexEntries();
+		return currentNode==root? null : currentNode.getIndexEntries();
 	}
 	
 	public void increaseEntryForKey(String word, String docId, int num) {

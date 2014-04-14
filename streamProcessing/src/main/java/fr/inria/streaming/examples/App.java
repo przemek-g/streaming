@@ -11,9 +11,13 @@ import org.apache.log4j.Logger;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
+import backtype.storm.tuple.Fields;
+import fr.inria.streaming.examples.bolt.IndexingBolt;
 import fr.inria.streaming.examples.bolt.SentenceSplittingBolt;
 import fr.inria.streaming.examples.bolt.WordStemmingBolt;
 import fr.inria.streaming.examples.spout.TextContentSpout;
+import fr.inria.streaming.examples.spout.TextContentSpout.WrongFileNameException;
+import fr.inria.streaming.examples.utils.TextFileIndexPersister;
 import fr.inria.streaming.examples.utils.TextFileReader;
 
 /**
@@ -44,7 +48,7 @@ public class App
 		return null;
 	}
 	
-    public static void main( String[] args ) throws InterruptedException
+    public static void main( String[] args ) throws InterruptedException, WrongFileNameException
     {
     	TopologyBuilder builder = new TopologyBuilder();
 
@@ -59,9 +63,10 @@ public class App
     	
     	logger.info("The file name is "+fileName);
     	
-        builder.setSpout("text-spout", new TextContentSpout(new TextFileReader(fileName)),1); 
+        builder.setSpout("text-spout", new TextContentSpout(fileName),1); 
         builder.setBolt("splitter-bolt", new SentenceSplittingBolt(), 4).shuffleGrouping("text-spout");
         builder.setBolt("stemmer-bolt", new WordStemmingBolt(),4).shuffleGrouping("splitter-bolt");
+        builder.setBolt("index-bolt", new IndexingBolt(new TextFileIndexPersister("AppIndex.txt")),1).fieldsGrouping("stemmer-bolt", new Fields("docId"));
 
         Config conf = new Config();
         conf.setDebug(true);

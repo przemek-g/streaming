@@ -1,9 +1,13 @@
 package fr.inria.streaming.examples.utils.index;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TrieNode {
+public class TrieNode implements Serializable {
+
+	private static final long serialVersionUID = -4245320015149715376L;
+
 
 	/**
 	 * The key-letter associated with this node
@@ -42,6 +46,7 @@ public class TrieNode {
 	// no need to initiate 'entries' in this constructor - we want it to remain null
 	public TrieNode() {
 		this.letter = ' ';
+		this.entries = new HashMap<String, Integer>();
 	}
 	
 	public TrieNode(char c) throws ImproperLetterException {

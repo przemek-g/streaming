@@ -21,7 +21,13 @@ public class IndexingBolt extends BaseRichBolt {
 	
 	private OutputCollector collector;
 	private IndexPersister indexPersister;
+
+	public IndexingBolt() { super(); }
 	
+	public IndexingBolt(IndexPersister persister) {
+		super();
+		this.setIndexPersister(persister);
+	}
 
 	@Override
 	public void execute(Tuple tuple) {
@@ -63,7 +69,7 @@ public class IndexingBolt extends BaseRichBolt {
 	@Override
 	public Map<String,Object> getComponentConfiguration() {
 		Config conf = new Config();
-		int tickFrequencyInSeconds = 3;
+		int tickFrequencyInSeconds = 1;
 		
 		// a component-specific conf parameter for receiving a special tuple from '__system' component and '__tick' stream
 		conf.put(Config.TOPOLOGY_TICK_TUPLE_FREQ_SECS, tickFrequencyInSeconds);

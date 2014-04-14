@@ -11,7 +11,7 @@ import fr.inria.streaming.examples.utils.index.TrieInvertedCountingIndex;
 public class TextFileIndexPersisterTest {
 
 	@Test
-	public void testWithNonExistentFile() {
+	public void testInteractionsWithIndex() {
 		String fileName = "someNonExistentFile.txt";
 		File file = new File(fileName);
 		if (file.exists()) {

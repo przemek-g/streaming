@@ -1,0 +1,38 @@
+I. Downloads and setup
+
+1. Download Maven from: http://maven.apache.org/download.cgi  and unpack it in a directory of your choice (e.g. /usr/local/ ):
+
+tar -xzf apache-maven-3.2.1-bin.tar.gz
+ 
+2. Modify the file ~/.bashrc or ~/.bash_profile (the latter if you're on MacOSX), entering the paths of Maven and JVM installations (note - on Linux your JVM would typically be located under /usr/lib/jvm/* ):
+
+export M2_HOME=/usr/local/apache-maven-3.2.1/
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
+export PATH=$JAVA_HOME:$PATH
+
+3. Clone the following git repository to your local file system:
+
+A. via https:
+
+	git clone https://github.com/przemek-g/streaming.git
+
+B. or via SSH:
+
+	git clone git@github.com:przemek-g/streaming.git
+
+II. Running
+
+1. To verify the correctness of our setup, enter the streamProcessing project directory (the one where pom.xml is located) and run:
+
+	mvn test
+
+Upon successful unit tests execution, you should see the 'BUILD SUCCESS' status message printed.
+
+2. To run the basic topology application, type (while in the main project directory):
+
+	mvn compile exec:java -Dstorm.topology=fr.inria.streaming.examples.App 
+
+(The topology will probably take a few seconds to perform its setup, then you should see lines of log messages. After the topology stops, you should see the 'BUILD SUCCESS' status message printed)
