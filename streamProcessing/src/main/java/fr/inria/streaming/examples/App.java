@@ -66,11 +66,11 @@ public class App
         builder.setSpout("text-spout", new TextContentSpout(fileName),1); 
         builder.setBolt("splitter-bolt", new SentenceSplittingBolt(), 4).shuffleGrouping("text-spout");
         builder.setBolt("stemmer-bolt", new WordStemmingBolt(),4).shuffleGrouping("splitter-bolt");
-        builder.setBolt("index-bolt", new IndexingBolt(new TextFileIndexPersister("AppIndex.txt")),1).fieldsGrouping("stemmer-bolt", new Fields("docId"));
+        builder.setBolt("index-bolt", new IndexingBolt(new TextFileIndexPersister("AppIndex.txt")),4).fieldsGrouping("stemmer-bolt", new Fields("docId"));
 
         Config conf = new Config();
         conf.setDebug(true);
-        conf.setMaxTaskParallelism(3);
+        conf.setMaxTaskParallelism(4);
 
         LocalCluster cluster = new LocalCluster();
         cluster.submitTopology("sample-streaming-topology", conf, builder.createTopology());
