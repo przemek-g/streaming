@@ -9,16 +9,18 @@ In this project we attempt to create a model for handling data streams based on 
 
 1. Download Maven from: http://maven.apache.org/download.cgi  and unpack it in a directory of your choice (e.g. /usr/local/ ):
 
-tar -xzf apache-maven-3.2.1-bin.tar.gz
+    ```tar -xzf apache-maven-3.2.1-bin.tar.gz```
  
 2. Modify the file ~/.bashrc or ~/.bash_profile (the latter if you're on MacOSX), entering the paths of Maven and JVM installations (note - on Linux your JVM would typically be located under /usr/lib/jvm/* ):
 
-export M2_HOME=/usr/local/apache-maven-3.2.1/
-export M2=$M2_HOME/bin
-export PATH=$M2:$PATH
-
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
-export PATH=$JAVA_HOME:$PATH
+	```    
+	export M2_HOME=/usr/local/apache-maven-3.2.1/
+	export M2=$M2_HOME/bin
+	export PATH=$M2:$PATH
+	
+	export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
+	export PATH=$JAVA_HOME:$PATH
+	```
 
 3. Clone the following git repository to your local file system:
 
