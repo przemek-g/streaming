@@ -1,13 +1,11 @@
 -----------------------------------------------------------------------------------------------------------
-I. Downloads and setup
+# I. Downloads and setup
 -----------------------------------------------------------------------------------------------------------
 
-__________________________________________________________________________________________________________
 1. Download Maven from: http://maven.apache.org/download.cgi  and unpack it in a directory of your choice (e.g. /usr/local/ ):
 
 tar -xzf apache-maven-3.2.1-bin.tar.gz
  
-__________________________________________________________________________________________________________
 2. Modify the file ~/.bashrc or ~/.bash_profile (the latter if you're on MacOSX), entering the paths of Maven and JVM installations (note - on Linux your JVM would typically be located under /usr/lib/jvm/* ):
 
 export M2_HOME=/usr/local/apache-maven-3.2.1/
@@ -17,7 +15,6 @@ export PATH=$M2:$PATH
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
 export PATH=$JAVA_HOME:$PATH
 
-__________________________________________________________________________________________________________
 3. Clone the following git repository to your local file system:
 
 A. via https:
@@ -29,47 +26,47 @@ B. or via SSH:
 	git clone git@github.com:przemek-g/streaming.git
 
 -----------------------------------------------------------------------------------------------------------
-II. Running
+# II. Running
 -----------------------------------------------------------------------------------------------------------
 
-__________________________________________________________________________________________________________
 1. To verify the correctness of our setup, enter the streamProcessing project directory (the one where pom.xml is located) and run:
 
+	```
 	mvn test
+	```
 
 Upon successful unit tests execution, you should see the 'BUILD SUCCESS' status message printed.
 
-__________________________________________________________________________________________________________
 2. To run the basic topology application, type (while in the main project directory):
 
+	```
 	mvn compile exec:java -Dstorm.topology=fr.inria.streaming.examples.App 
+	```
 
 (The topology will probably take a few seconds to perform its setup, then you should see lines of log messages. After the topology stops, you should see the 'BUILD SUCCESS' status message printed)
 
 -----------------------------------------------------------------------------------------------------------
-III. How to use the API
+# III. How to use the API
 -----------------------------------------------------------------------------------------------------------
 
 Let's provide a quick overview of how to create a topology programmatically using the Storm library.
 
-__________________________________________________________________________________________________________
 1. Prerequisites:
-A. 
-   - topology - a directed graph of distrbuted processing in Storm; 
+A. *Topology* : a directed graph of distrbuted processing in Storm; 
    - nodes represent processing elements (they can receive portions of data, perform computational logic, and send the data further over some channel)), 
    - edges represent channels over which data is sent in a given direction
 
-B. Spout - a source of data stream in the topology (a node with only outgoing edges); the data it emits may come from different sources, e.g. it may be consumed from a message queue, read from database, or generated in any other way (in this example we read a text file and emit its lines)
+B. *Spout* : a source of data stream in the topology (a node with only outgoing edges); the data it emits may come from different sources, e.g. it may be consumed from a message queue, read from database, or generated in any other way (in this example we read a text file and emit its lines)
 
-C. Bolt - a processing component of a topology, i.e. node that has incoming edges (and may or may not have outgoing edges). Bolts perform different stages of computational logic on our data streams. They can perform analysis of data, store data (e.g. database), etc. ...
+C. *Bolt* : a processing component of a topology, i.e. node that has incoming edges (and may or may not have outgoing edges). Bolts perform different stages of computational logic on our data streams. They can perform analysis of data, store data (e.g. database), etc. ...
 
-D. Tuples are portions of stream data; they contain key-value pairs (i.e. named fields with values)
+D. *Tuples* are portions of stream data; they contain key-value pairs (i.e. named fields with values)
 
-__________________________________________________________________________________________________________
 2. Topology setup - running in 'local mode' (on a single machine) 
 
 (This is done in fr.inria.streaming.examples/App.java)
 
+```
 // For registering elements of our topology
 TopologyBuilder builder = new TopologyBuilder(); 
 
@@ -109,3 +106,4 @@ Thread.sleep(4000);
 
 // Close the topology
 cluster.shutdown();
+```
