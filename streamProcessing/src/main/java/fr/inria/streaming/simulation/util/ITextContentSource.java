@@ -1,6 +1,8 @@
 package fr.inria.streaming.simulation.util;
 
-public interface TextContentSource {
+import java.io.Serializable;
+
+public interface ITextContentSource extends Serializable {
 	
 	char[] getTextContent();
 

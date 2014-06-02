@@ -1,10 +1,9 @@
 package fr.inria.streaming.examples;
 
+import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
 
@@ -18,7 +17,6 @@ import fr.inria.streaming.examples.bolt.WordStemmingBolt;
 import fr.inria.streaming.examples.spout.TextContentSpout;
 import fr.inria.streaming.examples.spout.TextContentSpout.WrongFileNameException;
 import fr.inria.streaming.examples.utils.TextFileIndexPersister;
-import fr.inria.streaming.examples.utils.TextFileReader;
 
 /**
  * Hello world!

@@ -78,7 +78,11 @@ public class FrequencyEmissionSpoutTest {
 			fail();
 		}
 		spout.close();
+		
+		// verify the number of interactions
 		Mockito.verify(spoutOutputCollector,Mockito.atLeast(secondsToSleep*frequencyHertz)).emit(Mockito.any(Values.class));
+		Mockito.verify(textContentSource,Mockito.atLeast(secondsToSleep*frequencyHertz)).getTextContent();
+		
 		logger.info("Going to sleep for some more seconds to verify there are no more interactions with the spout's SpoutOutputCollector");
 		try {
 			Thread.sleep(2000);
