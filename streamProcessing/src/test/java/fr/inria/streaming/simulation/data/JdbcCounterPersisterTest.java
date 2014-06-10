@@ -36,7 +36,7 @@ public class JdbcCounterPersisterTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws IOException {
-		connectionProvider = new EmbeddedDatabaseConnectionPool();
+		connectionProvider = EmbeddedDerbyConnectionPool.getInstance();
 		JdbcCounterPersister.setConnectionProvider(connectionProvider);
 		persister = JdbcCounterPersister.getInstance(_testDB); 
 	}

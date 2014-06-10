@@ -16,6 +16,7 @@ import fr.inria.streaming.simulation.Simulation;
 import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
+import fr.inria.streaming.simulation.data.PersistenceManager;
 import fr.inria.streaming.simulation.util.CharactersCounter;
 import fr.inria.streaming.simulation.util.ThreadsManager;
 import fr.inria.streaming.simulation.util.TupleUtils;
@@ -68,8 +69,8 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 
 		logger.info("Preparing Bolt: "+this.getClass().getName());
 		
-		this._persister = Simulation.getPersisterInstance(); // note: this is againt the inversion-of-control principle ;-)
-		logger.info("Set the Bolt's persister to: "+_persister.toString());
+		this._persister = PersistenceManager.getPersisterInstance(stormConf); 
+		logger.info("MostFrequentCharacterBolt set its persister to the following one: "+_persister.toString());
 		
 		// start a thread for the persister here!!!
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import fr.inria.streaming.simulation.Simulation;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
+import fr.inria.streaming.simulation.data.PersistenceManager;
 import fr.inria.streaming.simulation.util.ITextContentSource;
 import fr.inria.streaming.simulation.util.ThreadsManager;
 import backtype.storm.spout.SpoutOutputCollector;
@@ -89,8 +90,8 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 		logger.info(openingMsg);
 		_outputCollector = collector;
 
-		this._persister = Simulation.getPersisterInstance(); // note that this is rather against inversion-of-control style ;-)
-		logger.info("FrequencyEmissionSpout set its persister to the following instance:"+this._persister.toString());
+		this._persister = PersistenceManager.getPersisterInstance(conf);
+		logger.info("FrequencyEmissionSpout set its persister to the following one:"+this._persister.toString());
 		
 		// schedule emission of a tuple at fixed rate with 0 delay
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(

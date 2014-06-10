@@ -18,6 +18,7 @@ import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.IDatabaseConnectionProvider;
 import fr.inria.streaming.simulation.data.JdbcCounterPersister;
+import fr.inria.streaming.simulation.data.PersistenceManager;
 import fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler;
 import fr.inria.streaming.simulation.spout.FrequencyEmissionSpout;
 import fr.inria.streaming.simulation.util.FakeTweetContentSource;
@@ -26,60 +27,6 @@ import fr.inria.streaming.simulation.util.ThreadsManager;
 public class Simulation {
 
 	private static Logger _logger = Logger.getLogger(Simulation.class);
-	
-	private static final String _SERVER_MODE = "server";
-	private static final String _EMBEDDED_MODE = "embedded";
-	
-	// global indicator of database connection mode
-	private static String _connectionMode = _EMBEDDED_MODE;
-	
-	private static void _setConnectionMode(String mode) {
-		if (mode != null) {
-			_connectionMode = mode;
-			_logger.info("Persistence mode set to "+mode);
-		}
-		else {
-			_logger.warn("Trying to set null persistence mode");
-		}
-	}
-	
-	// global method retrieving the kind of persistor that was set via cmd line
-	public static String _getConnectionProviderClassName() {
-		String prefix = "fr.inria.streaming.simulation.data.";
-		if (_connectionMode == null) {
-			_logger.warn("Returning null persistence mode...");
-			return null;
-		}
-		
-		if (_connectionMode.equals(_EMBEDDED_MODE)) {
-			return prefix+"EmbeddedDatabaseConnectionPool";
-		}
-		else if (_connectionMode.equals(_SERVER_MODE)) {
-			return prefix+"DatabaseServerConnectionPool";
-		}
-		
-		return null;
-	}
-	
-	public static ICountPersister getPersisterInstance() {
-		String connClassName = _getConnectionProviderClassName();
-		if (connClassName != null) {
-			try {
-				String dbName = "sim-DB";
-				JdbcCounterPersister.setConnectionProvider((IDatabaseConnectionProvider)Class.forName(connClassName).newInstance());
-				_logger.info("Returning counter persister for database "+dbName);
-				return JdbcCounterPersister.getInstance("sim-DB");
-			} catch (InstantiationException e) {
-				_logger.error(e.toString());
-			} catch (IllegalAccessException e) {
-				_logger.error(e.toString());
-			} catch (ClassNotFoundException e) {
-				_logger.error(e.toString());
-			}
-		}
-		_logger.info("Returning a FakePersister");
-		return new FakePersister();
-	}
 
 	private static Options prepareCmdLineOptions() {
 		Options options = new Options();
@@ -189,7 +136,8 @@ public class Simulation {
 			_logger.info("Bolt name: " + bolt);
 			_logger.info("Bolt supervisor: " + boltSupervisorName);
 			_logger.info("Is in distributed mode: " + isDistributedMode);
-			_logger.info("Frequency of emission [Hz]: " + emissionFrequencyHertz);
+			_logger.info("Frequency of emission [Hz]: "
+					+ emissionFrequencyHertz);
 			_logger.info("Frequency of persistence [Hz]: "
 					+ persistenceFrequencyHertz);
 			_logger.info("Persistence type: " + persistenceType);
@@ -198,21 +146,31 @@ public class Simulation {
 					+ FakeTweetContentSource.getTweetLength());
 			_logger.info("Network link throughput is:" + throughput);
 
-			if (_EMBEDDED_MODE.equals(persistenceType) || _SERVER_MODE.equals(persistenceType)) {
-				_setConnectionMode(persistenceType);
-			}
-
 			Config conf = new Config();
 			conf.setDebug(true);
-			
+			// no need to check for illegal values, etc. - will result in a
+			// FakePersister in such cases
+			conf.put(PersistenceManager.DB_CONNECTION_MODE, persistenceType);
+
 			// the following config setting doesn't work on a per-topology
 			// basis, it's a matter of the whole cluster's configuration
 			// conf.put(Config.STORM_SCHEDULER,
 			// "fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler");
 
 			TopologyBuilder builder = new TopologyBuilder();
-			builder.setSpout(spout, new FrequencyEmissionSpout(Long.valueOf(emissionFrequencyHertz), Long.valueOf(persistenceFrequencyHertz), description+" - spout", throughput, new FakeTweetContentSource())).setNumTasks(1);
-			builder.setBolt(bolt, new MostFrequentCharacterBolt(Long.valueOf(persistenceFrequencyHertz), description+" - bolt", throughput)).shuffleGrouping(spout).setNumTasks(1);
+			builder.setSpout(
+					spout,
+					new FrequencyEmissionSpout(Long
+							.valueOf(emissionFrequencyHertz), Long
+							.valueOf(persistenceFrequencyHertz), description
+							+ " - spout", throughput,
+							new FakeTweetContentSource()), 1).setNumTasks(1);
+			builder.setBolt(
+					bolt,
+					new MostFrequentCharacterBolt(Long
+							.valueOf(persistenceFrequencyHertz), description
+							+ " - bolt", throughput), 1).setNumTasks(1)
+					.shuffleGrouping(spout);
 
 			if (isDistributedMode) {
 				conf.setNumWorkers(2);

@@ -6,7 +6,16 @@ public class ServerDerbyConnectionPool extends DerbyDatabaseConnectionPool {
 	private static final String _DEFAULT_DB_NAME = "simulation-DB";
 	private static final String _CLIENT_DRIVER_CLASS_NAME = "org.apache.derby.jdbc.ClientDriver";
 
-	public ServerDerbyConnectionPool() {
+	private static ServerDerbyConnectionPool _instance;
+	
+	public static synchronized ServerDerbyConnectionPool getInstance() {
+		if (_instance == null) {
+			_instance = new ServerDerbyConnectionPool();
+		}
+		return _instance;
+	}
+	
+	private ServerDerbyConnectionPool() {
 		super();
 	}
 

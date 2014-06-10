@@ -26,7 +26,7 @@ public class JdbcCounterPersister implements ICountPersister {
 			.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 	// by default, use the connection provider for the embedded mode
-	public static IDatabaseConnectionProvider _connectionProvider = new EmbeddedDatabaseConnectionPool();
+	public static IDatabaseConnectionProvider _connectionProvider = EmbeddedDerbyConnectionPool.getInstance();
 	private static Statement _stmt;
 
 	private static Map<String, JdbcCounterPersister> _persistersStore = new HashMap<String, JdbcCounterPersister>();

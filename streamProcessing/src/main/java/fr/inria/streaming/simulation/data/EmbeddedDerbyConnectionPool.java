@@ -1,12 +1,21 @@
 package fr.inria.streaming.simulation.data;
 
-public class EmbeddedDatabaseConnectionPool extends DerbyDatabaseConnectionPool {
+public class EmbeddedDerbyConnectionPool extends DerbyDatabaseConnectionPool {
 
 	private static final String _BASE_URL = "jdbc:derby:";
 	private static final String _DEFAULT_DB_NAME = "simulation-embedded-DB";
 	private static final String _EMBEDDED_DRIVER_CLASS_NAME = "org.apache.derby.jdbc.EmbeddedDriver";
 	
-	public EmbeddedDatabaseConnectionPool() {
+	private static EmbeddedDerbyConnectionPool _instance;
+	
+	public static synchronized EmbeddedDerbyConnectionPool getInstance() {
+		if (_instance == null) {
+			_instance = new EmbeddedDerbyConnectionPool();
+		}
+		return _instance;
+	}
+	
+	private EmbeddedDerbyConnectionPool() {
 		super();
 	}
 	
