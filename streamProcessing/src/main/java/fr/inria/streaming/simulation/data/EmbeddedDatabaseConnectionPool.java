@@ -6,19 +6,7 @@ public class EmbeddedDatabaseConnectionPool extends DerbyDatabaseConnectionPool 
 	private static final String _DEFAULT_DB_NAME = "simulation-embedded-DB";
 	private static final String _EMBEDDED_DRIVER_CLASS_NAME = "org.apache.derby.jdbc.EmbeddedDriver";
 	
-	private static EmbeddedDatabaseConnectionPool instance;
-	
-	/**
-	 * Returns a singleton instance of this class.
-	 */
-	public static synchronized EmbeddedDatabaseConnectionPool getInstance() {
-		if (instance == null) {
-			instance = new EmbeddedDatabaseConnectionPool();
-		}
-		return instance;
-	}
-	
-	private EmbeddedDatabaseConnectionPool() {
+	public EmbeddedDatabaseConnectionPool() {
 		super();
 	}
 	

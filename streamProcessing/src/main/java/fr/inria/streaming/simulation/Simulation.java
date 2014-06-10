@@ -14,8 +14,6 @@ import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
 import fr.inria.streaming.simulation.bolt.MostFrequentCharacterBolt;
-import fr.inria.streaming.simulation.data.DatabaseServerConnectionPool;
-import fr.inria.streaming.simulation.data.EmbeddedDatabaseConnectionPool;
 import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.IDatabaseConnectionProvider;
@@ -65,11 +63,8 @@ public class Simulation {
 			} catch (ClassNotFoundException e) {
 				_logger.error(e.toString());
 			}
-			return null;
 		}
-		else {
-			return new FakePersister();
-		}
+		return new FakePersister();
 	}
 
 	private static Options prepareCmdLineOptions() {
@@ -189,25 +184,6 @@ public class Simulation {
 					+ FakeTweetContentSource.getTweetLength());
 			_logger.info("Network link throughput is:" + throughput);
 
-//			ICountPersister spoutPersister, boltPersister;
-//
-//			if ("embedded".equals(persistenceType)) {
-//				JdbcCounterPersister
-//						.setConnectionProvider(EmbeddedDatabaseConnectionPool
-//								.getInstance());
-//				boltPersister = JdbcCounterPersister.getInstance("sim-db");
-//				spoutPersister = JdbcCounterPersister.getInstance("sim-db");
-//			} else if ("server".equals(persistenceType)) {
-//				JdbcCounterPersister
-//						.setConnectionProvider(DatabaseServerConnectionPool
-//								.getInstance());
-//				boltPersister = JdbcCounterPersister.getInstance("sim-db");
-//				spoutPersister = JdbcCounterPersister.getInstance("sim-db");
-//			} else {
-//				boltPersister = new FakePersister();
-//				spoutPersister = new FakePersister();
-//			}
-			
 			if ("embedded".equals(persistenceType) || "server".equals(persistenceType)) {
 				_setConnectionMode(persistenceType);
 			}
@@ -221,22 +197,8 @@ public class Simulation {
 			// "fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler");
 
 			TopologyBuilder builder = new TopologyBuilder();
-//			builder.setSpout(
-//					spout,
-//					new FrequencyEmissionSpout(Long
-//							.valueOf(emissionFrequencyHertz), Long
-//							.valueOf(persistenceFrequencyHertz), description
-//							+ " - spout", throughput,
-//							new FakeTweetContentSource(), spoutPersister), 1)
-//					.setNumTasks(1);
-//			builder.setBolt(
-//					bolt,
-//					new MostFrequentCharacterBolt(Long
-//							.valueOf(persistenceFrequencyHertz), description
-//							+ " - bolt", throughput, boltPersister), 1)
-//					.setNumTasks(1).shuffleGrouping(spout);
-			builder.setSpout(spout, new FrequencyEmissionSpout(Long.valueOf(emissionFrequencyHertz), Long.valueOf(persistenceFrequencyHertz), description+" - spout", throughput, new FakeTweetContentSource()));
-			builder.setBolt(bolt, new MostFrequentCharacterBolt(Long.valueOf(persistenceFrequencyHertz), description+" - bolt", throughput));
+			builder.setSpout(spout, new FrequencyEmissionSpout(Long.valueOf(emissionFrequencyHertz), Long.valueOf(persistenceFrequencyHertz), description+" - spout", throughput, new FakeTweetContentSource())).setNumTasks(1);
+			builder.setBolt(bolt, new MostFrequentCharacterBolt(Long.valueOf(persistenceFrequencyHertz), description+" - bolt", throughput)).setNumTasks(1).shuffleGrouping(spout);
 
 			if (isDistributedMode) {
 				conf.setNumWorkers(2);
