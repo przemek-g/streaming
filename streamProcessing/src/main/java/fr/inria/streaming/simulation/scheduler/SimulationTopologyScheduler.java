@@ -27,8 +27,6 @@ public class SimulationTopologyScheduler implements IScheduler {
 	private static String boltName = "simulation-bolt";
 	private static String boltSupervisorName = "simulation-supervisor";
 	private static String spoutSupervisorName = "spout-supervisor";
-	
-
 
 	private static Logger logger = Logger.getRootLogger();
 	
@@ -212,16 +210,6 @@ public class SimulationTopologyScheduler implements IScheduler {
 	public static void setSpoutSupervisorName(String spoutSupervisorName) {
 		if (spoutSupervisorName != null) {
 			SimulationTopologyScheduler.spoutSupervisorName = spoutSupervisorName;
-		}
-	}
-
-	public static String getSupervisorName() {
-		return boltSupervisorName;
-	}
-	
-	public static void setSupervisorName(String supervisorName) {
-		if (supervisorName != null) {
-			SimulationTopologyScheduler.boltSupervisorName = supervisorName;
 		}
 	}
 	

@@ -25,6 +25,10 @@ public class CharactersCounter implements Serializable {
 	private Map<Character,Integer> _charactersCount = new HashMap<Character,Integer>();
 	
 	public void count(char c) {
+		if (c == ' ' || c=='\n' || c=='\t') {
+			return;
+		}
+		
 		if (!_charactersCount.containsKey(c)) {
 			_charactersCount.put(c, 1);
 			

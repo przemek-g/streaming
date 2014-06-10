@@ -15,11 +15,11 @@ import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.util.ITextContentSource;
 
 public class FrequencyEmissionSpoutTest {
 
-	private static final long ONE_SECONDS_NANOS = 1000000000;
 	private static char[] textContent;
 	private static Logger logger = Logger.getLogger(FrequencyEmissionSpoutTest.class);
 
@@ -59,7 +59,7 @@ public class FrequencyEmissionSpoutTest {
 		textContentSource = Mockito.mock(ITextContentSource.class);
 		Mockito.when(textContentSource.getTextContent()).thenReturn(textContent);
 		
-		spout = new FrequencyEmissionSpout(frequencyHertz, textContentSource);
+		spout = new FrequencyEmissionSpout(frequencyHertz, "testing FrequencyEmissionSpout", "someThroughput", textContentSource, new FakePersister());
 		spoutOutputCollector = Mockito.mock(SpoutOutputCollector.class);
 		Mockito.when(spoutOutputCollector.emit(Mockito.anyListOf(Object.class))).thenReturn(new ArrayList<Integer>());
 		
