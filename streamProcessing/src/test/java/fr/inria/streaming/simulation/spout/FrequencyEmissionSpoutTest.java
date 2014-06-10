@@ -59,7 +59,7 @@ public class FrequencyEmissionSpoutTest {
 		textContentSource = Mockito.mock(ITextContentSource.class);
 		Mockito.when(textContentSource.getTextContent()).thenReturn(textContent);
 		
-		spout = new FrequencyEmissionSpout(frequencyHertz, "testing FrequencyEmissionSpout", "someThroughput", textContentSource, new FakePersister());
+		spout = new FrequencyEmissionSpout(frequencyHertz, "testing FrequencyEmissionSpout", "someThroughput", textContentSource);
 		spoutOutputCollector = Mockito.mock(SpoutOutputCollector.class);
 		Mockito.when(spoutOutputCollector.emit(Mockito.anyListOf(Object.class))).thenReturn(new ArrayList<Integer>());
 		

@@ -121,4 +121,9 @@ public class JdbcCounterPersister implements ICountPersister {
 		return _conn;
 	}
 
+	@Override
+	public String toString() {
+		return "instance-of="+this.getClass().getName();
+	}
+	
 }

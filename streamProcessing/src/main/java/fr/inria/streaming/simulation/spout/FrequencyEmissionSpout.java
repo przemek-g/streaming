@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
+import fr.inria.streaming.simulation.Simulation;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
 import fr.inria.streaming.simulation.util.ITextContentSource;
@@ -59,19 +60,16 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	private String _networkThroughput;
 
 	public FrequencyEmissionSpout(long frequencyHertz, String description,
-			String throughputInfo, ITextContentSource source,
-			ICountPersister persister) {
-		this(frequencyHertz, 1, description, throughputInfo, source, persister);
+			String throughputInfo, ITextContentSource source) {
+		this(frequencyHertz, 1, description, throughputInfo, source);
 	}
 
 	public FrequencyEmissionSpout(long emissionFrequencyHertz,
 			long persistenceFrequencyHertz, String description,
-			String throughputInfo, ITextContentSource source,
-			ICountPersister persister) {
+			String throughputInfo, ITextContentSource source) {
 		_emissionPeriodNanoseconds = (long) (1.0 / emissionFrequencyHertz * NANOS_IN_SECOND);
 		_persistencePeriodNanoSeconds = (long) (1.0 / persistenceFrequencyHertz * NANOS_IN_SECOND);
 		_textContentSource = source;
-		_persister = persister;
 		_description = description;
 		_networkThroughput = throughputInfo;
 	}
@@ -91,6 +89,9 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 		logger.info(openingMsg);
 		_outputCollector = collector;
 
+		this._persister = Simulation.getPersisterInstance(); // note that this is rather against inversion-of-control style ;-)
+		logger.info("FrequencyEmissionSpout set its persister to the following instance:"+this._persister.toString());
+		
 		// schedule emission of a tuple at fixed rate with 0 delay
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(
 				new Runnable() {
@@ -120,7 +121,8 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 								.toString());
 
 						_persister.persistCounterWithCurrentTimestamp(
-								_invocationsCounter, _description, _elementType, _networkThroughput);
+								_invocationsCounter, _description,
+								_elementType, _networkThroughput);
 					}
 				}, 0, _persistencePeriodNanoSeconds, TimeUnit.NANOSECONDS);
 	}
@@ -132,9 +134,11 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	@Override
 	public void nextTuple() {
 		try {
-			Thread.sleep(100); // the documentation says it's good to sleep here so as not to waste too much cpu
+			Thread.sleep(100); // the documentation says it's good to sleep here
+								// so as not to waste too much cpu
 		} catch (InterruptedException e) {
-			logger.warn("Thread interrupted while sleeping for 100 ms in nextTuple: "+e.toString());
+			logger.warn("Thread interrupted while sleeping for 100 ms in nextTuple: "
+					+ e.toString());
 		}
 	}
 

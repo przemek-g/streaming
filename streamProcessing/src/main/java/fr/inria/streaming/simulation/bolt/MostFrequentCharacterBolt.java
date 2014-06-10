@@ -12,6 +12,7 @@ import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
+import fr.inria.streaming.simulation.Simulation;
 import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
@@ -49,17 +50,15 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 	private String _networkThroughput;
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
-			String description, String throughputInfo, ICountPersister persister) {
+			String description, String throughputInfo) {
 		_persistencePeriodNanos = (long) (1.0 / persistenceFrequencyHz * NANOS_IN_SECOND);
-		_persister = persister;
 		_description = description;
 		_networkThroughput = throughputInfo;
 	}
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
 			String description) {
-		this(persistenceFrequencyHz, description, "NO INFO",
-				new FakePersister());
+		this(persistenceFrequencyHz, description, "NO INFO");
 	}
 
 	@Override
@@ -67,6 +66,11 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 			OutputCollector collector) {
 		_outputCollector = collector;
 
+		logger.info("Preparing Bolt: "+this.getClass().getName());
+		
+		this._persister = Simulation.getPersisterInstance(); // note: this is againt the inversion-of-control principle ;-)
+		logger.info("Set the Bolt's persister to: "+_persister.toString());
+		
 		// start a thread for the persister here!!!
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(
 				new Runnable() {

@@ -30,5 +30,10 @@ public class FakePersister implements ICountPersister {
 		logger.info(msg);
 
 	}
+	
+	@Override
+	public String toString() {
+		return "instance-of-"+this.getClass().getName();
+	}
 
 }
