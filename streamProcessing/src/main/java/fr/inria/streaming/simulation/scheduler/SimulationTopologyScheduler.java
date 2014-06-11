@@ -25,10 +25,10 @@ public class SimulationTopologyScheduler implements IScheduler {
 	private static String topologyName = "simulation-topology";
 	private static String spoutName = "simulation-spout";
 	private static String boltName = "simulation-bolt";
-	private static String boltSupervisorName = "simulation-supervisor";
+	private static String boltSupervisorName = "bolt-supervisor";
 	private static String spoutSupervisorName = "spout-supervisor";
 
-	private static Logger logger = Logger.getRootLogger();
+	private static Logger logger = Logger.getLogger(SimulationTopologyScheduler.class.getName());
 	
 	
 	@Override

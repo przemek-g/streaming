@@ -14,10 +14,6 @@ import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
 import fr.inria.streaming.simulation.bolt.MostFrequentCharacterBolt;
-import fr.inria.streaming.simulation.data.FakePersister;
-import fr.inria.streaming.simulation.data.ICountPersister;
-import fr.inria.streaming.simulation.data.IDatabaseConnectionProvider;
-import fr.inria.streaming.simulation.data.JdbcCounterPersister;
 import fr.inria.streaming.simulation.data.PersistenceManager;
 import fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler;
 import fr.inria.streaming.simulation.spout.FrequencyEmissionSpout;
@@ -151,7 +147,6 @@ public class Simulation {
 			// no need to check for illegal values, etc. - will result in a
 			// FakePersister in such cases
 			conf.put(PersistenceManager.DB_CONNECTION_MODE, persistenceType);
-
 			// the following config setting doesn't work on a per-topology
 			// basis, it's a matter of the whole cluster's configuration
 			// conf.put(Config.STORM_SCHEDULER,
