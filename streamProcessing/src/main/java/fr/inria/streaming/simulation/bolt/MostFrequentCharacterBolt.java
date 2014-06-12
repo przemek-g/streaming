@@ -48,18 +48,24 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 	private long _persistencePeriodNanos;
 	private String _description;
 	private String _elementType = "BOLT";
-	private String _networkThroughput;
+	private String _networkBandwidth;
+	private int _tweetLength;
+	private int _emissionFrequency;
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
-			String description, String throughputInfo) {
+			int tweetLength, int emissionFreq, String description,
+			String throughputInfo) {
 		_persistencePeriodNanos = (long) (1.0 / persistenceFrequencyHz * NANOS_IN_SECOND);
+		_tweetLength = tweetLength;
+		_emissionFrequency = emissionFreq;
 		_description = description;
-		_networkThroughput = throughputInfo;
+		_networkBandwidth = throughputInfo;
 	}
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
-			String description) {
-		this(persistenceFrequencyHz, description, "NO INFO");
+			int tweetLength, int emissionFreq, String description) {
+		this(persistenceFrequencyHz, tweetLength, emissionFreq, description,
+				"NO INFO");
 	}
 
 	@Override
@@ -67,11 +73,12 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 			OutputCollector collector) {
 		_outputCollector = collector;
 
-		logger.info("Preparing Bolt: "+this.getClass().getName());
-		
-		this._persister = PersistenceManager.getPersisterInstance(stormConf); 
-		logger.info("MostFrequentCharacterBolt set its persister to the following one: "+_persister.toString());
-		
+		logger.info("Preparing Bolt: " + this.getClass().getName());
+
+		this._persister = PersistenceManager.getPersisterInstance(stormConf);
+		logger.info("MostFrequentCharacterBolt set its persister to the following one: "
+				+ _persister.toString());
+
 		// start a thread for the persister here!!!
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(
 				new Runnable() {
@@ -86,7 +93,8 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 
 						_persister.persistCounterWithCurrentTimestamp(
 								_invocationsCounter, _description,
-								_elementType, _networkThroughput);
+								_elementType, _networkBandwidth, _tweetLength,
+								_emissionFrequency);
 					}
 				}, 0, _persistencePeriodNanos, TimeUnit.NANOSECONDS);
 	}

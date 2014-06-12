@@ -116,9 +116,7 @@ public class Simulation {
 				persistenceType = "fake";
 			}
 			if (description == null) {
-				description = new StringBuilder("tweetLength=")
-						.append(tweetLength).append(" emissionFrequency=")
-						.append(emissionFrequencyHertz).toString();
+				description = "no additional info";
 			}
 			if (tweetLength != null) {
 				FakeTweetContentSource.setTweetLength(Integer
@@ -159,13 +157,15 @@ public class Simulation {
 					spout,
 					new FrequencyEmissionSpout(Long
 							.valueOf(emissionFrequencyHertz), Long
-							.valueOf(persistenceFrequencyHertz), description,
-							bandwidth, new FakeTweetContentSource()), 1)
-					.setNumTasks(1);
+							.valueOf(persistenceFrequencyHertz), Integer
+							.valueOf(tweetLength), description, bandwidth,
+							new FakeTweetContentSource()), 1).setNumTasks(1);
 			builder.setBolt(
 					bolt,
 					new MostFrequentCharacterBolt(Long
-							.valueOf(persistenceFrequencyHertz), description,
+							.valueOf(persistenceFrequencyHertz), Integer
+							.valueOf(tweetLength), Integer
+							.valueOf(emissionFrequencyHertz), description,
 							bandwidth), 1).setNumTasks(1)
 					.shuffleGrouping(spout);
 

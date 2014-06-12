@@ -70,7 +70,7 @@ public class JdbcCounterPersisterTest {
 			counter.increment();
 			counterValue = counter.getCount();
 			counterValues.add(counterValue);
-			persister.persistCounterWithCurrentTimestamp(counter, "testing persistence", "test", "test network");
+			persister.persistCounterWithCurrentTimestamp(counter, "testing persistence", "test", "test network", 100, 10);
 		}
 	}
 	

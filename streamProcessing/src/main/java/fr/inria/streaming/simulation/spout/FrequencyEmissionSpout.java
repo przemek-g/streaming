@@ -58,21 +58,27 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	private long _persistencePeriodNanoSeconds;
 	private String _description;
 	private final String _elementType = "SPOUT";
-	private String _networkThroughput;
-	
-	public FrequencyEmissionSpout(long frequencyHertz, String description,
-			String throughputInfo, ITextContentSource source) {
-		this(frequencyHertz, 1, description, throughputInfo, source);
+	private String _networkBandwidth;
+	private int _tweetLength;
+	private long _emissionFrequency;
+
+	public FrequencyEmissionSpout(long frequencyHertz, int tweetLength,
+			String description, String throughputInfo, ITextContentSource source) {
+		this(frequencyHertz, 1, tweetLength, description, throughputInfo,
+				source);
 	}
 
 	public FrequencyEmissionSpout(long emissionFrequencyHertz,
-			long persistenceFrequencyHertz, String description,
-			String throughputInfo, ITextContentSource source) {
+			long persistenceFrequencyHertz, int tweetLength,
+			String description, String throughputInfo, ITextContentSource source) {
 		_emissionPeriodNanoseconds = (long) (1.0 / emissionFrequencyHertz * NANOS_IN_SECOND);
 		_persistencePeriodNanoSeconds = (long) (1.0 / persistenceFrequencyHertz * NANOS_IN_SECOND);
 		_textContentSource = source;
 		_description = description;
-		_networkThroughput = throughputInfo;
+		_networkBandwidth = throughputInfo;
+		_tweetLength = tweetLength;
+		// save it in an attribute so that there's no need to recompute it
+		_emissionFrequency = emissionFrequencyHertz;
 	}
 
 	@Override
@@ -91,8 +97,9 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 		_outputCollector = collector;
 
 		this._persister = PersistenceManager.getPersisterInstance(conf);
-		logger.info("FrequencyEmissionSpout set its persister to the following one:"+this._persister.toString());
-		
+		logger.info("FrequencyEmissionSpout set its persister to the following one:"
+				+ this._persister.toString());
+
 		// schedule emission of a tuple at fixed rate with 0 delay
 		ThreadsManager.getScheduledExecutorService().scheduleAtFixedRate(
 				new Runnable() {
@@ -123,7 +130,8 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 
 						_persister.persistCounterWithCurrentTimestamp(
 								_invocationsCounter, _description,
-								_elementType, _networkThroughput);
+								_elementType, _networkBandwidth, _tweetLength,
+								_emissionFrequency);
 					}
 				}, 0, _persistencePeriodNanoSeconds, TimeUnit.NANOSECONDS);
 	}
@@ -148,7 +156,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	 * auxiliary thread that invokes tuple emissions with a given frequency.
 	 */
 	private void emitTuple() {
-		
+
 		char[] text = this._textContentSource.getTextContent();
 
 		if (text != null) {
@@ -172,7 +180,5 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	public void close() {
 		ThreadsManager.getScheduledExecutorService().shutdownNow();
 	}
-
-
 
 }

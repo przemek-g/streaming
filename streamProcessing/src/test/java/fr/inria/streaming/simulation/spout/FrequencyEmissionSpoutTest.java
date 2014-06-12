@@ -16,6 +16,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import fr.inria.streaming.simulation.data.FakePersister;
+import fr.inria.streaming.simulation.util.FakeTweetContentSource;
 import fr.inria.streaming.simulation.util.ITextContentSource;
 
 public class FrequencyEmissionSpoutTest {
@@ -59,7 +60,7 @@ public class FrequencyEmissionSpoutTest {
 		textContentSource = Mockito.mock(ITextContentSource.class);
 		Mockito.when(textContentSource.getTextContent()).thenReturn(textContent);
 		
-		spout = new FrequencyEmissionSpout(frequencyHertz, "testing FrequencyEmissionSpout", "someThroughput", textContentSource);
+		spout = new FrequencyEmissionSpout(frequencyHertz, FakeTweetContentSource.getTweetLength(), "testing FrequencyEmissionSpout", "someThroughput", textContentSource);
 		spoutOutputCollector = Mockito.mock(SpoutOutputCollector.class);
 		Mockito.when(spoutOutputCollector.emit(Mockito.anyListOf(Object.class))).thenReturn(new ArrayList<Integer>());
 		

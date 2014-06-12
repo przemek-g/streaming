@@ -17,23 +17,24 @@ public class FakePersister implements ICountPersister {
 
 	@Override
 	public void persistCounterWithCurrentTimestamp(
-			InvocationsCounter invocationsCounter, String description, String elementType, String throughput) {
+			InvocationsCounter invocationsCounter, String description,
+			String elementType, String bandwidth, int tweetLenght,
+			long emissionFrequency) {
 
 		String msg = new StringBuilder("persisting counter: ")
 				.append(invocationsCounter.getCount()).append(", at: ")
 				.append(_dateTimeFormatter.print(DateTime.now()))
 				.append("; description: ").append(description)
-				.append("; network throughput: ").append(throughput)
-				.append(", type: ").append(elementType)
-				.toString();
+				.append("; network throughput: ").append(bandwidth)
+				.append(", type: ").append(elementType).toString();
 
 		logger.info(msg);
 
 	}
-	
+
 	@Override
 	public String toString() {
-		return "instance-of-"+this.getClass().getName();
+		return "instance-of-" + this.getClass().getName();
 	}
 
 }

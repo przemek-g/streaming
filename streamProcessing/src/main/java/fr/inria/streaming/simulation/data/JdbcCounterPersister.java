@@ -21,12 +21,15 @@ public class JdbcCounterPersister implements ICountPersister {
 	private static final long serialVersionUID = -3881458904541129080L;
 	private static Logger logger = Logger.getLogger(JdbcCounterPersister.class);
 
-	private static final String _CREATE_TABLE = "create table counter_values(timestamp TIMESTAMP , count BIGINT, element_type VARCHAR(6), bandwidth VARCHAR(15), description VARCHAR(50))";
+	private static final String _CREATE_TABLE = "create table counter_values(timestamp TIMESTAMP , count BIGINT, element_type VARCHAR(6), "
+			+ "bandwidth VARCHAR(15), tweet_length INTEGER, emission_frequency_Hz INTEGER, description VARCHAR(50))";
+
 	private static DateTimeFormatter _dateTimeFormatter = DateTimeFormat
 			.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 	// by default, use the connection provider for the embedded mode
-	public static IDatabaseConnectionProvider _connectionProvider = EmbeddedDerbyConnectionPool.getInstance();
+	public static IDatabaseConnectionProvider _connectionProvider = EmbeddedDerbyConnectionPool
+			.getInstance();
 	private static Statement _stmt;
 
 	private static Map<String, JdbcCounterPersister> _persistersStore = new HashMap<String, JdbcCounterPersister>();
@@ -86,7 +89,8 @@ public class JdbcCounterPersister implements ICountPersister {
 	@Override
 	public void persistCounterWithCurrentTimestamp(
 			InvocationsCounter invocationsCounter, String description,
-			String recordType, String bandwidth) {
+			String recordType, String bandwidth, int tweetLength,
+			long emissionFrequency) {
 		try {
 
 			String msg = new StringBuilder("persisting counter: ")
@@ -98,16 +102,18 @@ public class JdbcCounterPersister implements ICountPersister {
 
 			String insertStr = new StringBuilder(
 					"insert into counter_values values(").append("'")
+					// timestamp
 					.append(_dateTimeFormatter.print(DateTime.now()))
 					.append("'").append(", ")
-					// timestamp
-					.append(invocationsCounter.getCount()).append(", ")
 					// count
-					.append("'").append(recordType).append("'").append(", ")
+					.append(invocationsCounter.getCount()).append(", ")
 					// element_type (SPOUT or BOLT)
+					.append("'").append(recordType).append("'").append(", ")
+					// network bandwidth info
 					.append("'").append(bandwidth).append("'").append(", ")
-					// network throughput info
-					.append("'").append(description).append("'").append(")") 
+					.append(tweetLength).append(", ")
+					.append(emissionFrequency).append(", ")
+					.append("'").append(description).append("'").append(")")
 					.toString();
 			_stmt.executeUpdate(insertStr);
 
@@ -122,7 +128,7 @@ public class JdbcCounterPersister implements ICountPersister {
 
 	@Override
 	public String toString() {
-		return "instance-of="+this.getClass().getName();
+		return "instance-of=" + this.getClass().getName();
 	}
-	
+
 }
