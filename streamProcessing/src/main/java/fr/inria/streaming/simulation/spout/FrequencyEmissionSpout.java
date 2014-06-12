@@ -59,7 +59,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	private String _description;
 	private final String _elementType = "SPOUT";
 	private String _networkThroughput;
-
+	
 	public FrequencyEmissionSpout(long frequencyHertz, String description,
 			String throughputInfo, ITextContentSource source) {
 		this(frequencyHertz, 1, description, throughputInfo, source);
@@ -148,6 +148,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	 * auxiliary thread that invokes tuple emissions with a given frequency.
 	 */
 	private void emitTuple() {
+		
 		char[] text = this._textContentSource.getTextContent();
 
 		if (text != null) {
@@ -171,5 +172,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 	public void close() {
 		ThreadsManager.getScheduledExecutorService().shutdownNow();
 	}
+
+
 
 }

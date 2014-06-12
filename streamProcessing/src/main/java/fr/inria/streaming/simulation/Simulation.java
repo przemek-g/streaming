@@ -60,10 +60,10 @@ public class Simulation {
 				"Additional description of the simulation.");
 
 		options.addOption(
-				"nt",
-				"throughput",
+				"bw",
+				"bandwidth",
 				true,
-				"Information on the network throughput in the format: 'value unit',"
+				"Information on the network link bandwidth in the format: 'value unit',"
 						+ "where unit should have the following form: Bit/s, KBit/s, MBit/s, Byte/s, KByte/s, MByte/s, etc.");
 
 		options.addOption("tl", "tweetLength", true,
@@ -93,7 +93,7 @@ public class Simulation {
 					"fake");
 			String description = cmd.getOptionValue("description");
 			String tweetLength = cmd.getOptionValue("tweetLength");
-			String throughput = cmd.getOptionValue("throughput");
+			String bandwidth = cmd.getOptionValue("bandwidth");
 
 			if (topology == null) {
 				topology = SimulationTopologyScheduler.getTopologyName();
@@ -116,14 +116,16 @@ public class Simulation {
 				persistenceType = "fake";
 			}
 			if (description == null) {
-				description = "example simulation data";
+				description = new StringBuilder("tweetLength=")
+						.append(tweetLength).append(" emissionFrequency=")
+						.append(emissionFrequencyHertz).toString();
 			}
 			if (tweetLength != null) {
 				FakeTweetContentSource.setTweetLength(Integer
 						.valueOf(tweetLength));
 			}
-			if (throughput == null) {
-				throughput = "NO INFO";
+			if (bandwidth == null) {
+				bandwidth = "NO INFO";
 			}
 
 			_logger.info("Topology name: " + topology);
@@ -140,7 +142,7 @@ public class Simulation {
 			_logger.info("Description: " + description);
 			_logger.info("Tweet length is: "
 					+ FakeTweetContentSource.getTweetLength());
-			_logger.info("Network link throughput is:" + throughput);
+			_logger.info("Network link bandwidth is:" + bandwidth);
 
 			Config conf = new Config();
 			conf.setDebug(true);
@@ -157,20 +159,21 @@ public class Simulation {
 					spout,
 					new FrequencyEmissionSpout(Long
 							.valueOf(emissionFrequencyHertz), Long
-							.valueOf(persistenceFrequencyHertz), description
-							+ " - spout", throughput,
-							new FakeTweetContentSource()), 1).setNumTasks(1);
+							.valueOf(persistenceFrequencyHertz), description,
+							bandwidth, new FakeTweetContentSource()), 1)
+					.setNumTasks(1);
 			builder.setBolt(
 					bolt,
 					new MostFrequentCharacterBolt(Long
-							.valueOf(persistenceFrequencyHertz), description
-							+ " - bolt", throughput), 1).setNumTasks(1)
+							.valueOf(persistenceFrequencyHertz), description,
+							bandwidth), 1).setNumTasks(1)
 					.shuffleGrouping(spout);
 
 			if (isDistributedMode) {
 				conf.setNumWorkers(2);
 				StormSubmitter.submitTopology(topology, conf,
 						builder.createTopology());
+
 			} else {
 				String sleepTimeStr = cmd.getOptionValue("sleepTime", "15");
 				_logger.info("sleepTime [s]: " + sleepTimeStr);

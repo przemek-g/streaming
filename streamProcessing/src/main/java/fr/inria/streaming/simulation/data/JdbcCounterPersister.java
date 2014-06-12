@@ -21,7 +21,7 @@ public class JdbcCounterPersister implements ICountPersister {
 	private static final long serialVersionUID = -3881458904541129080L;
 	private static Logger logger = Logger.getLogger(JdbcCounterPersister.class);
 
-	private static final String _CREATE_TABLE = "create table counter_values(timestamp TIMESTAMP , count BIGINT, element_type VARCHAR(6), throughput VARCHAR(15), description VARCHAR(50))";
+	private static final String _CREATE_TABLE = "create table counter_values(timestamp TIMESTAMP , count BIGINT, element_type VARCHAR(6), bandwidth VARCHAR(15), description VARCHAR(50))";
 	private static DateTimeFormatter _dateTimeFormatter = DateTimeFormat
 			.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
@@ -86,7 +86,7 @@ public class JdbcCounterPersister implements ICountPersister {
 	@Override
 	public void persistCounterWithCurrentTimestamp(
 			InvocationsCounter invocationsCounter, String description,
-			String recordType, String throughput) {
+			String recordType, String bandwidth) {
 		try {
 
 			String msg = new StringBuilder("persisting counter: ")
@@ -105,7 +105,7 @@ public class JdbcCounterPersister implements ICountPersister {
 					// count
 					.append("'").append(recordType).append("'").append(", ")
 					// element_type (SPOUT or BOLT)
-					.append("'").append(throughput).append("'").append(", ")
+					.append("'").append(bandwidth).append("'").append(", ")
 					// network throughput info
 					.append("'").append(description).append("'").append(")") 
 					.toString();
