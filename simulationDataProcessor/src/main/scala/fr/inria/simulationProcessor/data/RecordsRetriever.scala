@@ -4,6 +4,7 @@ import java.sql.Connection
 import java.sql.Statement
 import java.sql.ResultSet
 import scala.collection.mutable.HashMap
+import java.util.logging.Logger
 
 /*
  * Database schema is:
@@ -21,7 +22,7 @@ class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emission
 
   private def _isSpout(s: String): Boolean = TypeSpout.equalsIgnoreCase(s)
   private def _isBolt(s: String): Boolean = TypeBolt.equalsIgnoreCase(s)
-
+  
   /**
    * returns a map containing records from associated with the given timestamp
    */
@@ -42,7 +43,7 @@ class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emission
       else if (_isBolt(elementType))
         new DataRecord(ts = ts, valForBolt = count)
       else
-        new DataRecord(ts = ts) // a default value that does not actually make any sense :-P
+        new DataRecord(ts = ts, valForSpout = -2, valForBolt = -2) // a value only for debugging purposes, maybe:-P
 
       resultRecords += ((ts, record)) // update the map
 
@@ -64,9 +65,10 @@ class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emission
           } else {
             var rec: DataRecord = res.getOrElse(k, null);
             if (rec.valueForSpout == DataRecord.EmptyRecord) {
-              rec.valueForBolt = v.valueForBolt
-            } else if (rec.valueForBolt == DataRecord.EmptyRecord) {
               rec.valueForSpout = v.valueForSpout
+            } 
+            else if (rec.valueForBolt == DataRecord.EmptyRecord) {
+              rec.valueForBolt = v.valueForBolt
             }
             res.put(k, rec)
           }

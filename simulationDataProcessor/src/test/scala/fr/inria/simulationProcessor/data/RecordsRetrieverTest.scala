@@ -43,7 +43,7 @@ class RecordsRetrieverTest {
       conn2.commit()
     } catch {
       case sqlEx: SQLException => {
-        _logger.warn("Exception during creation of table counter_values for " + _url1 + ": " + sqlEx.toString)
+        _logger.warn("Exception during creation of table counter_values for " + _url2 + ": " + sqlEx.toString)
       }
     }
   }
@@ -59,7 +59,7 @@ class RecordsRetrieverTest {
 
     var conn2: Connection = ConnectionProvider.getConnection(_url2)
     var stmt2: Statement = conn2.createStatement()
-    inserts2.foreach(s => stmt.executeUpdate(s))
+    inserts2.foreach(s => stmt2.executeUpdate(s))
     conn2.commit()
   }
 
@@ -86,18 +86,48 @@ class RecordsRetrieverTest {
 
   @Test
   def testNonRepeatingRecords() = {
-    var l = List("insert into counter_values values('2012-04-05 12:00:05', 5, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')")
-    var l2 = List("insert into counter_values values('2012-04-06 12:00:05', 6, 'BOLT', '2Mbit/s', 100, 200, 'some_description')")
+    var l = List("insert into counter_values values('2012-04-05 12:00:05', 5, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')",
+        "insert into counter_values values('2012-04-05 12:01:00', 10, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')")
+    var l2 = List("insert into counter_values values('2012-04-05 12:00:06', 6, 'BOLT', '2Mbit/s', 100, 200, 'some_description')",
+        "insert into counter_values values('2012-04-05 12:01:01', 12, 'BOLT', '2Mbit/s', 100, 200, 'some_description')",
+        "insert into counter_values values('2012-04-06 00:00:01', 18, 'BOLT', '2Mbit/s', 100, 200, 'some_description')")
+    
     _prepareDatabase(l, l2)
 
     var retriever = new RecordsRetriever("2Mbit/s", 100, 200) // bw, tweetLength, emissionFreq
     var result = retriever.getSortedRecords(_url1, _url2)
     assertNotNull(result)
-    assertResult(2) { result.size }
-    _logger info result(0).toString
-    _logger info result(1).toString
+    assertResult(5) { result.size }
+//    _logger info result(0).toString
+//    _logger info result(1).toString
     assert(result(0) equals new DataRecord("2012-04-05 12:00:05.0",valForSpout=5))
-    assert(result(1) equals new DataRecord("2012-04-06 12:00:05.0",valForBolt=6))
+    assert(result(1) equals new DataRecord("2012-04-05 12:00:06.0",valForBolt=6))
+    assert(result(2) equals new DataRecord("2012-04-05 12:01:00.0",valForSpout=10))
+    assert(result(3) equals new DataRecord("2012-04-05 12:01:01.0",valForBolt=12))
+    assert(result(4) equals new DataRecord("2012-04-06 00:00:01.0",valForBolt=18))
+    
+    result.foreach(_logger debug _.toString)
 
+  }
+  
+  @Test
+  def testWithRepeatingRecords() = {
+    var l = List("insert into counter_values values('2012-04-05 12:00:05', 5, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')",
+        "insert into counter_values values('2012-04-05 12:00:07', 10, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')")
+        
+    var l2 = List("insert into counter_values values('2012-04-05 12:00:06', 12, 'BOLT', '2Mbit/s', 100, 200, 'some_description')",
+        "insert into counter_values values('2012-04-05 12:00:05', 6, 'BOLT', '2Mbit/s', 100, 200, 'some_description')") 
+        
+   _prepareDatabase(l, l2)
+   
+   var retriever = new RecordsRetriever("2Mbit/s",100,200) // bw, tweetLength, emissionFreq
+   var result = retriever.getSortedRecords(_url1, _url2)
+   
+   assertNotNull(result)
+   assertResult(3) { result.size }
+   result.foreach(_logger debug _.toString)
+   assert(result(0) equals new DataRecord("2012-04-05 12:00:05.0",valForSpout=5,valForBolt=6))
+   assert(result(1) equals new DataRecord("2012-04-05 12:00:06.0",valForBolt=12))
+   assert(result(2) equals new DataRecord("2012-04-05 12:00:07.0",valForSpout=10))
   }
 }
