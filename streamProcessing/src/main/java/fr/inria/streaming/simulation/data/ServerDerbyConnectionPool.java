@@ -2,7 +2,7 @@ package fr.inria.streaming.simulation.data;
 
 public class ServerDerbyConnectionPool extends DerbyDatabaseConnectionPool {
 	
-	private static final String _BASE_URL = "jdbc:derby://localhost:1527/";
+	private static final String _BASE_URL = "jdbc:derby://localhost:8000/";
 	private static final String _DEFAULT_DB_NAME = "simulation-DB";
 	private static final String _CLIENT_DRIVER_CLASS_NAME = "org.apache.derby.jdbc.ClientDriver";
 
