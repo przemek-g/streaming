@@ -27,7 +27,7 @@ class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emission
    * returns a map containing records from associated with the given timestamp
    */
   private def _getRecords(url: String): HashMap[String, DataRecord] = {
-    var conn1: Connection = ConnectionProvider.getConnection(url)
+    var conn1: Connection = ConnectionProvider(url)
     var readStmt: Statement = conn1.createStatement()
     var rs: ResultSet = readStmt.executeQuery(_selectStr)
 

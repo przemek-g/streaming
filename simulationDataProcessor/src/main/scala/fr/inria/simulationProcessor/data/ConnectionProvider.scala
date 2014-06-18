@@ -15,7 +15,7 @@ object ConnectionProvider {
       DriverManager.getConnection(url)
   }
   
-  def getConnection(url:String) : Connection = {
+  def apply(url:String) : Connection = {
     // if the key is not present, evaluates the expression in second arg, associates it with the key, returns it
     _connections.getOrElseUpdate(url, _createConnection(url))
   }
