@@ -44,38 +44,37 @@ object App {
    * If the emissionFrequency is 0, let's process all frequencies (instead of just one)
    */
   private def _runSimulationDataProcessor() = {
-    
+
     def _getUniqueFrequenciesFromTwoDatabases() = {
-      val freqRetriever = new FrequenciesRetriever(_bandwidth.value.get, _tweetLength.value.get) 
+      val freqRetriever = new FrequenciesRetriever(_bandwidth.value.get, _tweetLength.value.get)
       val s = freqRetriever.getDistinctFrequencyValues(_database_1_url.value.get).toSet
       s.++(freqRetriever.getDistinctFrequencyValues(_database_2_url.value.get)).toList.sortWith(_ < _)
     }
-    
-    def _getFrequenciesToProcess() : List[Int] = {
+
+    def _getFrequenciesToProcess(): List[Int] = {
       _emissionFrequency.value.get match {
         case 0 => _getUniqueFrequenciesFromTwoDatabases
         case _ => List(_emissionFrequency.value.get)
       }
     }
 
-    def _adjustFileName() : String = {
-      var s:String = _fileName.value.mkString
-      if (s.substring(s.length()-4) equals ".csv") {
-        s.substring(0,s.length-4)
-      }
-      else {
+    def _adjustFileName(): String = {
+      var s: String = _fileName.value.mkString
+      if (s.substring(s.length() - 4) equals ".csv") {
+        s.substring(0, s.length - 4)
+      } else {
         s
       }
     }
-    
+
     _getFrequenciesToProcess.foreach(f => {
 
-      _logger info "Processing records for emissionFrequency: "+f
-      var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, _emissionFrequency.value.get)
+      _logger info "Processing records for emissionFrequency: " + f
+      var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, f)
       var records = retriever.getSortedRecords(_database_1_url.value.mkString, _database_2_url.value.mkString)
-      
+
       var fileName = _adjustFileName + "_" + f + "_Hz.csv"
-      _logger info "Saving to file: "+fileName
+      _logger info "Saving " + records.size + " records to file: " + fileName
       var exporter = new CSVDataRecordsExporter(fileName)
       exporter export records
     })
