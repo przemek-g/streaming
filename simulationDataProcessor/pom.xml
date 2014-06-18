@@ -30,6 +30,9 @@
 			<name>Scala-Tools Maven2 Repository</name>
 			<url>http://scala-tools.org/repo-releases</url>
 		</repository>
+
+		<!-- <repository> <snapshots> <enabled>false</enabled> </snapshots> <id>central</id> 
+			<name>bintray</name> <url>http://dl.bintray.com/bmc/maven</url> </repository> -->
 	</repositories>
 
 	<pluginRepositories>
@@ -57,15 +60,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest_2.11</artifactId>
+			<artifactId>scalatest_2.10</artifactId>
 			<version>2.2.0</version>
-			<!-- <scope>test</scope> -->
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.3</version>
+			<groupId>org.clapper</groupId>
+			<artifactId>argot_2.10</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 
 		<dependency>
@@ -132,6 +135,25 @@
 							<include>**/*Test.*</include>
 							<include>**/*Suite.*</include>
 						</includes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.2.1</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<executable>java</executable>
+						<includeProjectDependencies>true</includeProjectDependencies>
+						<includePluginDependencies>false</includePluginDependencies>
+						<classpathScope>compile</classpathScope>
+						<mainClass>fr.inria.simulationProcessor.App</mainClass>
 					</configuration>
 				</plugin>
 			</plugins>
