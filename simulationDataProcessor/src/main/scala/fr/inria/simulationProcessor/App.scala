@@ -4,6 +4,8 @@ import org.clapper.argot._
 import ArgotConverters._
 import org.apache.log4j.Logger
 import java.io.IOException
+import fr.inria.simulationProcessor.data.RecordsRetriever
+import fr.inria.simulationProcessor.export.CSVDataRecordsExporter
 /**
  * @author ${user.name}
  * The main object that parses the command line and runs the tool.
@@ -24,7 +26,7 @@ object App {
   
   private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency)
   
-  private def _printSomething() = { 
+  private def _printArgs = { 
 	var s = new StringBuilder()
 	
 	_cliOptions.foreach(option => {
@@ -37,11 +39,18 @@ object App {
 	println(s.toString)
   }
   
+  private def _runSimulationDataProcessor = {
+    var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, _emissionFrequency.value.get)
+    var records = retriever.getSortedRecords(_database_1_url.value.mkString, _database_2_url.value.mkString)
+    var exporter = new CSVDataRecordsExporter(_fileName.value.mkString)
+    exporter export records
+  }
+  
   def main(args : Array[String]) {
     try {
-      _parser.parse(args)
-      // ... run ...
-      _printSomething
+      _parser parse args
+      _printArgs
+      _runSimulationDataProcessor
     }
     catch {
       case e: ArgotUsageException => _logger error "Bad Argot CLI parsing usage: "+e.toString
