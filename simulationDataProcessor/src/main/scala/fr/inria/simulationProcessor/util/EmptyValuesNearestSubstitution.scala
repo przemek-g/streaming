@@ -2,7 +2,7 @@ package fr.inria.simulationProcessor.util
 
 import fr.inria.simulationProcessor.data.DataRecord
 
-class EmptyValuesNearestSubstitution(var emptyVal:Int) extends EmptyValuesSubstitution {
+class EmptyValuesNearestSubstitution(var emptyVal:Long) extends EmptyValuesSubstitution {
 
   def emptyValue = emptyVal
   
@@ -29,10 +29,6 @@ class EmptyValuesNearestSubstitution(var emptyVal:Int) extends EmptyValuesSubsti
       def setter = _setSpoutValue
     }
     
-    
-    
-//    def _getFirstOrNull(l:List[DataRecord]) : DataRecord = if (l.isEmpty) null  else l(0)
-    
     def _substituteUsingOperations(ops:ValueOperations)(l:List[DataRecord]) : List[DataRecord] = {
       
       def _findNearestNonEmpty(rec:DataRecord) : DataRecord = {
@@ -49,7 +45,7 @@ class EmptyValuesNearestSubstitution(var emptyVal:Int) extends EmptyValuesSubsti
         else {
           var nonEmptyRec = _findNearestNonEmpty(rec)
           if (nonEmptyRec != null) ops.setter(rec,ops.getter(nonEmptyRec)) //substitute the value
-          else null
+          else rec
         }
       })
     }
@@ -57,6 +53,6 @@ class EmptyValuesNearestSubstitution(var emptyVal:Int) extends EmptyValuesSubsti
     def _substituteBoltValues = _substituteUsingOperations(new BoltValueOperations())_
     def _substituteSpoutValues = _substituteUsingOperations(new SpoutValueOperations())_
     List(_substituteBoltValues, _substituteSpoutValues).foldLeft(l)((list,fn) => fn(list))
-//    _substituteBoltValues(_substituteSpoutValues(l))
-  } // end method substitute
+  } 
+  // end method substitute
 }

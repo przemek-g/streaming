@@ -7,6 +7,8 @@ import java.io.IOException
 import fr.inria.simulationProcessor.data.RecordsRetriever
 import fr.inria.simulationProcessor.export.CSVDataRecordsExporter
 import fr.inria.simulationProcessor.data.FrequenciesRetriever
+import fr.inria.simulationProcessor.util.EmptyValuesNearestSubstitution
+import fr.inria.simulationProcessor.data.DataRecord
 /**
  * @author ${user.name}
  * The main object that parses the command line and runs the tool.
@@ -26,6 +28,7 @@ object App {
   private val _emissionFrequency = _parser.option[Int](List("emissionFrequency"), "frequency", "The frequency of spouts' emission into the network link (into the topology, more generally)")
   
   private val _description = _parser.option[String](List("description","desc"), "description_string", "The value of the description attribute of the records held in the databases")
+  private val _emptyValuesSubstitution = _parser.flag[Boolean](List("substitute"),"Flag indicating whether to perform substitution of empty (-1) values in data records lists")
 
   private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency, _description)
 
@@ -40,6 +43,7 @@ object App {
     })
 
     println(s.toString)
+    println(_emptyValuesSubstitution.value.mkString)
   }
 
   /**
@@ -71,6 +75,8 @@ object App {
 
     def _getDescription() = if (_description.value != None && _description.value.get.length()>0) _description.value.get else ""
     
+    val _shouldSubstitute = (_emptyValuesSubstitution.value != None && _emptyValuesSubstitution.value.get)
+      
     _getFrequenciesToProcess.foreach(f => {
 
       _logger info "Processing records for emissionFrequency: " + f
@@ -80,6 +86,7 @@ object App {
 
       var fileName = _adjustFileName + "_" + f + "_Hz.csv"
       _logger info "Saving " + records.size + " records to file: " + fileName
+      records = if (_shouldSubstitute) new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(records) else records
       var exporter = new CSVDataRecordsExporter(fileName)
       exporter export records
     })
