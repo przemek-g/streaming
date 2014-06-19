@@ -12,17 +12,18 @@ import java.util.logging.Logger
  * 		+ "bandwidth VARCHAR(15), tweet_length INTEGER, emission_frequency_Hz INTEGER, description VARCHAR(50))
  */
 
-class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emissionFrequency: Int) {
+class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emissionFrequency: Int, val description: String = "") {
 
-  private val _selectStr: String = "select timestamp, count, element_type from counter_values where bandwidth = '" +
-    bandwidth + "' and tweet_length = " + tweetLength + " and emission_frequency_Hz = " + emissionFrequency
+  private val _query: String = "select timestamp, count, element_type from counter_values where bandwidth = '" + bandwidth + "' and tweet_length = " + tweetLength + " and emission_frequency_Hz = " + emissionFrequency
+
+  private def _selectStr: String = if ("" equals description) _query else _query + " and description='" + description + "'" 
 
   private val TypeSpout = "SPOUT"
   private val TypeBolt = "BOLT"
 
   private def _isSpout(s: String): Boolean = TypeSpout.equalsIgnoreCase(s)
   private def _isBolt(s: String): Boolean = TypeBolt.equalsIgnoreCase(s)
-  
+
   /**
    * returns a map containing records from associated with the given timestamp
    */
@@ -66,8 +67,7 @@ class RecordsRetriever(val bandwidth: String, val tweetLength: Int, val emission
             var rec: DataRecord = res.getOrElse(k, null);
             if (rec.valueForSpout == DataRecord.EmptyRecord) {
               rec.valueForSpout = v.valueForSpout
-            } 
-            else if (rec.valueForBolt == DataRecord.EmptyRecord) {
+            } else if (rec.valueForBolt == DataRecord.EmptyRecord) {
               rec.valueForBolt = v.valueForBolt
             }
             res.put(k, rec)

@@ -272,4 +272,39 @@ class RecordsRetrieverTest {
     assertEquals(result(4), new DataRecord("2012-04-06 00:00:01.0", valForBolt=18))
     
   }
+  
+  @Test
+  def testWithDescription() = {
+    var l = List(
+      "insert into counter_values values('2012-04-05 12:00:05', 5, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')",
+      "insert into counter_values values('2012-04-05 12:01:00', 10, 'SPOUT', '2Mbit/s', 100, 200, 'some_description')")
+    var l2 = List(
+      "insert into counter_values values('2012-04-05 12:00:06', 6, 'BOLT', '2Mbit/s', 100, 200, 'some_description')",
+      "insert into counter_values values('2012-04-05 12:01:01', 12, 'BOLT', '2Mbit/s', 100, 200, 'some_OTHER_description')",
+      "insert into counter_values values('2012-04-06 00:00:01', 18, 'BOLT', '2Mbit/s', 100, 200, 'some_description')")
+
+    _prepareDatabase(l, l2)
+    
+    var retriever = new RecordsRetriever("2Mbit/s", 100, 200,"some_description")
+    var result = retriever.getSortedRecords(_url1, _url2)
+    assertNotNull(result)
+    assertResult(4) { result.size }
+    assertEquals(result(0), new DataRecord("2012-04-05 12:00:05.0", valForSpout=5))
+    assertEquals(result(1), new DataRecord("2012-04-05 12:00:06.0", valForBolt=6))
+    assertEquals(result(2), new DataRecord("2012-04-05 12:01:00.0", valForSpout=10))
+    assertEquals(result(3), new DataRecord("2012-04-06 00:00:01.0", valForBolt=18))
+    
+    /* description that's not present in the data*/
+    retriever = new RecordsRetriever("2Mbit/s", 100, 200, "NON-EXISTENT description")
+    result = retriever.getSortedRecords(_url1, _url2)
+    assertNotNull(result)
+    assertResult(0) { result.size }
+    
+    /* the other description (present in only one row) */
+    retriever = new RecordsRetriever("2Mbit/s", 100, 200, "some_OTHER_description")
+    result = retriever.getSortedRecords(_url1, _url2)
+    assertNotNull(result)
+    assertResult(1) { result.size }
+    assertEquals(result(0), new DataRecord("2012-04-05 12:01:01.0", valForBolt=12))
+  }
 }

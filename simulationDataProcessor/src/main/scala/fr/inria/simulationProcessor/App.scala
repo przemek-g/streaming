@@ -24,8 +24,10 @@ object App {
   private val _bandwidth = _parser.option[String](List("bandwidth"), "link-bandwidth", "The string describing network link bandwidth, e.g. 2Mbit/s, 400 Kbit/s, etc.")
   private val _tweetLength = _parser.option[Int](List("tweetLength"), "tweet-length", "The length of a single tweet-message that was the transmission grain in our simulation")
   private val _emissionFrequency = _parser.option[Int](List("emissionFrequency"), "frequency", "The frequency of spouts' emission into the network link (into the topology, more generally)")
+  
+  private val _description = _parser.option[String](List("description","desc"), "description_string", "The value of the description attribute of the records held in the databases")
 
-  private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency)
+  private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency, _description)
 
   private def _printArgs = {
     var s = new StringBuilder()
@@ -67,10 +69,13 @@ object App {
       }
     }
 
+    def _getDescription() = if (_description.value != None && _description.value.get.length()>0) _description.value.get else ""
+    
     _getFrequenciesToProcess.foreach(f => {
 
       _logger info "Processing records for emissionFrequency: " + f
-      var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, f)
+      var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, f, _getDescription())
+      
       var records = retriever.getSortedRecords(_database_1_url.value.mkString, _database_2_url.value.mkString)
 
       var fileName = _adjustFileName + "_" + f + "_Hz.csv"
@@ -80,7 +85,7 @@ object App {
     })
 
   }
-
+  
   def main(args: Array[String]) {
     try {
       _parser parse args
