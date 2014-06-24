@@ -9,8 +9,10 @@ import fr.inria.simulationProcessor.export.CSVDataRecordsExporter
 import fr.inria.simulationProcessor.data.FrequenciesRetriever
 import fr.inria.simulationProcessor.util.EmptyValuesNearestSubstitution
 import fr.inria.simulationProcessor.data.DataRecord
+import fr.inria.simulationProcessor.util.LeadingEmptyValuesToZeroSubstitution
+import fr.inria.simulationProcessor.util.LeadingEmptyValuesToZeroSubstitution
 /**
- * @author ${user.name}
+ * @author Przemek
  * The main object that parses the command line and runs the tool.
  */
 object App {
@@ -26,11 +28,13 @@ object App {
   private val _bandwidth = _parser.option[String](List("bandwidth"), "link-bandwidth", "The string describing network link bandwidth, e.g. 2Mbit/s, 400 Kbit/s, etc.")
   private val _tweetLength = _parser.option[Int](List("tweetLength"), "tweet-length", "The length of a single tweet-message that was the transmission grain in our simulation")
   private val _emissionFrequency = _parser.option[Int](List("emissionFrequency"), "frequency", "The frequency of spouts' emission into the network link (into the topology, more generally)")
-  
-  private val _description = _parser.option[String](List("description","desc"), "description_string", "The value of the description attribute of the records held in the databases")
-  private val _emptyValuesSubstitution = _parser.flag[Boolean](List("substitute"),"Flag indicating whether to perform substitution of empty (-1) values in data records lists")
 
-  private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency, _description)
+  private val _description = _parser.option[String](List("description", "desc"), "description_string", "The value of the description attribute of the records held in the databases")
+  private val _emptyValuesSubstitution = _parser.flag[Boolean](List("substitute"), "Flag indicating whether to perform substitution of empty (-1) values in data records lists")
+
+  private val _emptyRecord = _parser.option[Int](List("emptyRecord"), "value_designating_no_record", "By default it's -1")
+
+  private val _cliOptions = List(_database_1_url, _database_2_url, _fileName, _bandwidth, _tweetLength, _emissionFrequency, _description, _emptyRecord)
 
   private def _printArgs = {
     var s = new StringBuilder()
@@ -51,12 +55,15 @@ object App {
    */
   private def _runSimulationDataProcessor() = {
 
+    /* --- define some auxiliary methods --- */
+    /* returns a list containing frequencies (unique occurrences) from both databse urls */
     def _getUniqueFrequenciesFromTwoDatabases() = {
       val freqRetriever = new FrequenciesRetriever(_bandwidth.value.get, _tweetLength.value.get)
       val s = freqRetriever.getDistinctFrequencyValues(_database_1_url.value.get).toSet
       s.++(freqRetriever.getDistinctFrequencyValues(_database_2_url.value.get)).toList.sortWith(_ < _)
     }
 
+    /* returns a list containing all the frequencies there are to process (one-element list if there's just one freq to process) */
     def _getFrequenciesToProcess(): List[Int] = {
       _emissionFrequency.value.get match {
         case 0 => _getUniqueFrequenciesFromTwoDatabases
@@ -64,6 +71,7 @@ object App {
       }
     }
 
+    /* if the given file name contains .csv suffix removes it (it's to be added later) */
     def _adjustFileName(): String = {
       var s: String = _fileName.value.mkString
       if (s.substring(s.length() - 4) equals ".csv") {
@@ -73,26 +81,39 @@ object App {
       }
     }
 
-    def _getDescription() = if (_description.value != None && _description.value.get.length()>0) _description.value.get else ""
-    
+    /* if a description was given, return it; otherwise, return an empty string */
+    def _getDescription() = if (_description.value != None && _description.value.get.length() > 0) _description.value.get else ""
+    /* if a value designating empty records was given, return it; otherwise, return the default empty record value */
+    def _getEmptyRecordValue() = if (_emptyRecord.value != None) _emptyRecord.value.get else DataRecord.EmptyRecord
+
+    DataRecord.EmptyRecord = _getEmptyRecordValue()
     val _shouldSubstitute = (_emptyValuesSubstitution.value != None && _emptyValuesSubstitution.value.get)
-      
+
+    /* now, for every frequency there is, let's process it and export a file */
     _getFrequenciesToProcess.foreach(f => {
 
       _logger info "Processing records for emissionFrequency: " + f
       var retriever = new RecordsRetriever(_bandwidth.value.mkString, _tweetLength.value.get, f, _getDescription())
-      
+
       var records = retriever.getSortedRecords(_database_1_url.value.mkString, _database_2_url.value.mkString)
 
-      var fileName = _adjustFileName + "_" + f + "_Hz.csv"
-      _logger info "Saving " + records.size + " records to file: " + fileName
-      records = if (_shouldSubstitute) new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(records) else records
-      var exporter = new CSVDataRecordsExporter(fileName)
-      exporter export records
+      if (records.nonEmpty) {
+        var fileName = _adjustFileName + "_" + f + "_Hz.csv"
+        _logger info "Saving " + records.size + " records to file: " + fileName
+        records = if (_shouldSubstitute) 
+          (new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord) with LeadingEmptyValuesToZeroSubstitution).substitute(records) 
+        else 
+          records
+        var exporter = new CSVDataRecordsExporter(fileName)
+        exporter export records
+      } else {
+        _logger info "No records to save for frequency " + f
+      }
+
     })
 
   }
-  
+
   def main(args: Array[String]) {
     try {
       _parser parse args

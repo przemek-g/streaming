@@ -17,7 +17,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.06", valForSpout = 6, valForBolt = 7),
       new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8, valForBolt = 9))
 
-    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(3) { resultList.size }
     assertEquals(l(0), resultList(0))
@@ -28,7 +28,7 @@ class EmptyValuesNearestSubstitutionTest {
   @Test
   def testWithEmptyList() = {
     var l: List[DataRecord] = List()
-    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(0) { resultList.size }
   }
@@ -41,7 +41,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.06", valForSpout = 6, valForBolt = 7),
       new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8, valForBolt = 9))
 
-    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(3) { resultList.size }
     assertEquals(new DataRecord("2012-04-05 12:00:05.01", valForSpout = 5, valForBolt = 7), resultList(0))
@@ -54,7 +54,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.06", valForSpout = 6, valForBolt = 7),
       new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8))
 
-    resultList = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    resultList = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(3) { resultList.size }
     assertEquals(l(0), resultList(0))
@@ -69,7 +69,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9),
       new DataRecord("2012-04-05 12:00:05.09", valForSpout = 10, valForBolt = 10))
 
-    resultList = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    resultList = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(5) { resultList.size }
     assertEquals(l(0), resultList(0))
@@ -87,7 +87,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.06", valForSpout = 6, valForBolt = 7),
       new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8, valForBolt = 9))
 
-    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    var resultList: List[DataRecord] = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(3) { resultList.size }
     assertEquals(new DataRecord("2012-04-05 12:00:05.01", valForSpout = 6, valForBolt = 5), resultList(0))
@@ -100,7 +100,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.06", valForSpout = 6, valForBolt = 7),
       new DataRecord("2012-04-05 12:00:05.07", valForBolt = 8))
 
-    resultList = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    resultList = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(3) { resultList.size }
     assertEquals(l(0), resultList(0))
@@ -115,7 +115,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.08", valForBolt = 9),
       new DataRecord("2012-04-05 12:00:05.09", valForSpout = 10, valForBolt = 10))
 
-    resultList = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    resultList = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(5) { resultList.size }
     assertEquals(l(0), resultList(0))
@@ -134,7 +134,7 @@ class EmptyValuesNearestSubstitutionTest {
       new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9),
       new DataRecord("2012-04-05 12:00:05.09", valForSpout = 10, valForBolt = 10))
 
-    var resultList = new EmptyValuesNearestSubstitution(-1).substitute(l)
+    var resultList = new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord).substitute(l)
     assertNotNull(resultList)
     assertResult(5) { resultList.size }
     assertEquals(l(0), resultList(0))

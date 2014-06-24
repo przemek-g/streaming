@@ -25,7 +25,5 @@ class DataRecord(var ts:String, var valForSpout:Long = -1, var valForBolt:Long =
 
 object DataRecord {
   
-  private val _EmptyRecord:Int = -1
-  
-  def EmptyRecord:Long = _EmptyRecord // getter for the constant 
+  var EmptyRecord = -1
 }
