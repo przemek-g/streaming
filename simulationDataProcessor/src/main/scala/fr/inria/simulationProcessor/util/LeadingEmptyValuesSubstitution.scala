@@ -4,7 +4,7 @@ import fr.inria.simulationProcessor.data.DataRecord
 
 trait LeadingEmptyValuesToZeroSubstitution extends EmptyValuesSubstitution {
 
-  private def _substitute(l: List[DataRecord], op: ValueOperations): List[DataRecord] = {
+  private def _substitute(l: List[DataRecord], op: EmptyValuesSubstitution.ValueOperations): List[DataRecord] = {
     var _trailingEmpty = true
 
     l.map((x: DataRecord) => {
@@ -13,7 +13,7 @@ trait LeadingEmptyValuesToZeroSubstitution extends EmptyValuesSubstitution {
   }
 
   abstract override def substitute(l: List[DataRecord]): List[DataRecord] = {
-    var _l = List(new SpoutValueOperations(), new BoltValueOperations())
+    var _l = List(EmptyValuesSubstitution.getSpoutOperations, EmptyValuesSubstitution.getBoltOperations)
       .foldLeft(l)((l, operations) => _substitute(l, operations))
     super.substitute(_l)
   }

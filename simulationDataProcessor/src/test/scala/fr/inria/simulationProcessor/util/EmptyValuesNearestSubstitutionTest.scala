@@ -74,8 +74,8 @@ class EmptyValuesNearestSubstitutionTest {
     assertResult(5) { resultList.size }
     assertEquals(l(0), resultList(0))
     assertEquals(l(1), resultList(1))
-    assertEquals(new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8, valForBolt = 10), resultList(2))
-    assertEquals(new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9, valForBolt = 10), resultList(3))
+    assertEquals(new DataRecord("2012-04-05 12:00:05.07", valForSpout = 8, valForBolt = 7), resultList(2))
+    assertEquals(new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9, valForBolt = 7), resultList(3))
     assertEquals(l(4), resultList(4))
   }
 
@@ -140,7 +140,7 @@ class EmptyValuesNearestSubstitutionTest {
     assertEquals(l(0), resultList(0))
     assertEquals(l(1), resultList(1))
     assertEquals(new DataRecord("2012-04-05 12:00:05.07", valForSpout = 9, valForBolt = 8), resultList(2))
-    assertEquals(new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9, valForBolt = 10), resultList(3))
+    assertEquals(new DataRecord("2012-04-05 12:00:05.08", valForSpout = 9, valForBolt = 8), resultList(3))
     assertEquals(l(4), resultList(4))
   }
   

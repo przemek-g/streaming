@@ -22,6 +22,7 @@ public class JdbcCounterPersister implements ICountPersister {
 			+ "bandwidth VARCHAR(15), tweet_length INTEGER, emission_frequency_Hz INTEGER, description VARCHAR(50))";
 
 	private static DateTimeFormatter _dateTimeFormatter = DateTimeFormat
+//			.forPattern("yyyy-MM-dd HH:mm:ss");
 			.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 	// by default, use the connection provider for the embedded mode
