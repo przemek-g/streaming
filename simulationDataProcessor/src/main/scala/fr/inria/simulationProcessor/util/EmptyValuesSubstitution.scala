@@ -24,7 +24,7 @@ object EmptyValuesSubstitution {
     def setter = (rec: DataRecord, newVal: Long) => { rec.valueForBolt = newVal; rec }
 
     /* for a bolt we want to choose the last of the bolts that are earlier than this one*/
-    def compare = (pattern: DataRecord, obj: DataRecord) => obj.timestamp < pattern.timestamp
+    def compare = (pattern: DataRecord, obj: DataRecord) => obj.timestamp <= pattern.timestamp
     def chooseSubstitute = (l: List[DataRecord]) => l.last
     def chooseSecondarySubstitute = (l: List[DataRecord]) => l(0)
   }
@@ -34,7 +34,7 @@ object EmptyValuesSubstitution {
     def setter = (rec: DataRecord, newVal: Long) => { rec.valueForSpout = newVal; rec }
 
     /* for a spout we want to choose the first of the spouts that are later than this one */
-    def compare = (pattern: DataRecord, obj: DataRecord) => pattern.timestamp < obj.timestamp
+    def compare = (pattern: DataRecord, obj: DataRecord) => pattern.timestamp <= obj.timestamp
     def chooseSubstitute = (l: List[DataRecord]) => l(0)
     def chooseSecondarySubstitute = (l: List[DataRecord]) => l.last
   }

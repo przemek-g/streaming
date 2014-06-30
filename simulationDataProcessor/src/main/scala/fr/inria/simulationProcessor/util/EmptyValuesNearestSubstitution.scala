@@ -1,9 +1,12 @@
 package fr.inria.simulationProcessor.util
 
 import fr.inria.simulationProcessor.data.DataRecord
+import org.apache.log4j.Logger
 
 class EmptyValuesNearestSubstitution(var emptyVal: Long) extends EmptyValuesSubstitution {
 
+  private val _logger:Logger = Logger.getLogger("EmptyValuesNearestSubstitution")
+  
   override def getEmptyValue = emptyVal
 
   override def substitute(l: List[DataRecord]): List[DataRecord] = {
@@ -12,6 +15,7 @@ class EmptyValuesNearestSubstitution(var emptyVal: Long) extends EmptyValuesSubs
 
       def _findNearestNonEmpty(rec: DataRecord): DataRecord = {
         var firstSearchSubstitutes: List[DataRecord] = l.filter((r) => { ops.getter(r) != getEmptyValue && ops.compare(rec,r) })
+        _logger.debug("firstSearchSubstitutes: " + firstSearchSubstitutes)
         if (firstSearchSubstitutes.nonEmpty) ops.chooseSubstitute(firstSearchSubstitutes)
         else {
           var secondSearchSubstitutes: List[DataRecord] = l.filter((r) => { ops.getter(r) != getEmptyValue && !ops.compare(rec, r) })
@@ -29,9 +33,15 @@ class EmptyValuesNearestSubstitution(var emptyVal: Long) extends EmptyValuesSubs
       })
     }
 
+    _logger.debug(".substitute")
+    _logger.debug("list before: "+l)
+    
     def _substituteBoltValues = _substituteUsingOperations(EmptyValuesSubstitution.getBoltOperations)_
     def _substituteSpoutValues = _substituteUsingOperations(EmptyValuesSubstitution.getSpoutOperations)_
-    List(_substituteSpoutValues, _substituteBoltValues).foldLeft(l)((list, fn) => fn(list))
+    var result = List(_substituteSpoutValues, _substituteBoltValues).foldLeft(l)((list, fn) => fn(list))
+    
+    _logger.debug("list after: "+l)
+    result
   }
   // end method substitute
 }
