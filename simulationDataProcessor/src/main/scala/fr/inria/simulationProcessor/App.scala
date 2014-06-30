@@ -11,6 +11,7 @@ import fr.inria.simulationProcessor.util.EmptyValuesNearestSubstitution
 import fr.inria.simulationProcessor.data.DataRecord
 import fr.inria.simulationProcessor.util.LeadingEmptyValuesToZeroSubstitution
 import fr.inria.simulationProcessor.util.LeadingEmptyValuesToZeroSubstitution
+import fr.inria.simulationProcessor.util.InterpolationEmptyValuesSubstitution
 /**
  * @author Przemek
  * The main object that parses the command line and runs the tool.
@@ -30,7 +31,8 @@ object App {
   private val _emissionFrequency = _parser.option[Int](List("emissionFrequency"), "frequency", "The frequency of spouts' emission into the network link (into the topology, more generally)")
 
   private val _description = _parser.option[String](List("description", "desc"), "description_string", "The value of the description attribute of the records held in the databases")
-  private val _emptyValuesSubstitution = _parser.flag[Boolean](List("substitute"), "Flag indicating whether to perform substitution of empty (-1) values in data records lists")
+  private val _emptyValuesInterpolation = _parser.flag[Boolean](List("interpolate"), "Flag indicating whether to perform linear interpolation of empty (-1) values in data records lists;" +
+    "if not specified, substitution with nearest 'neighbour' values will take place")
 
   private val _emptyRecord = _parser.option[Int](List("emptyRecord"), "value_designating_no_record", "By default it's -1")
 
@@ -47,7 +49,7 @@ object App {
     })
 
     println(s.toString)
-    println(_emptyValuesSubstitution.value.mkString)
+    println(_emptyValuesInterpolation.value.mkString)
   }
 
   /**
@@ -87,7 +89,7 @@ object App {
     def _getEmptyRecordValue() = if (_emptyRecord.value != None) _emptyRecord.value.get else DataRecord.EmptyRecord
 
     DataRecord.EmptyRecord = _getEmptyRecordValue()
-    val _shouldSubstitute = (_emptyValuesSubstitution.value != None && _emptyValuesSubstitution.value.get)
+    val _shouldInterpolate = (_emptyValuesInterpolation.value != None && _emptyValuesInterpolation.value.get)
 
     /* now, for every frequency there is, let's process it and export a file */
     _getFrequenciesToProcess.foreach(f => {
@@ -100,10 +102,10 @@ object App {
       if (records.nonEmpty) {
         var fileName = _adjustFileName + "_" + f + "_Hz.csv"
         _logger info "Saving " + records.size + " records to file: " + fileName
-        records = if (_shouldSubstitute) 
-          (new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord) with LeadingEmptyValuesToZeroSubstitution).substitute(records) 
-        else 
-          records
+        records = if (_shouldInterpolate)
+          (new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord) with InterpolationEmptyValuesSubstitution with LeadingEmptyValuesToZeroSubstitution).substitute(records)
+        else
+          (new EmptyValuesNearestSubstitution(DataRecord.EmptyRecord) with LeadingEmptyValuesToZeroSubstitution).substitute(records)
         var exporter = new CSVDataRecordsExporter(fileName)
         exporter export records
       } else {
