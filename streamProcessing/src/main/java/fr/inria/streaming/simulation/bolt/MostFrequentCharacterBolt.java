@@ -125,7 +125,10 @@ public class MostFrequentCharacterBolt extends BaseRichBolt {
 
 		// after processing every text, send the current maximum result further
 		// down the stream
+		
 		_outputCollector.emit(valuesToSend);
+		// if using Storm's reliability mechanisms, acknowledge the incoming tuple
+		_outputCollector.ack(tuple);
 	}
 
 	@Override

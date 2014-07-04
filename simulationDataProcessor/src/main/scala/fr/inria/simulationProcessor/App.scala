@@ -73,7 +73,7 @@ object App {
       }
     }
 
-    /* if the given file name contains .csv suffix removes it (it's to be added later) */
+    /* if the given file name contains .csv suffix, removes it (it's to be added later) */
     def _adjustFileName(): String = {
       var s: String = _fileName.value.mkString
       if (s.substring(s.length() - 4) equals ".csv") {

@@ -167,7 +167,12 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 					.append(_invocationsCounter.getCount()).append(" : ")
 					.append(txtStr).toString());
 
-			this._outputCollector.emit(new Values(txtStr));
+			// to take advantage of Storm's reliability
+			String msgId = "msg_"+String.valueOf(_invocationsCounter.getCount());
+			this._outputCollector.emit(new Values(txtStr), msgId);
+			
+			// don't care about reliability
+//			this._outputCollector.emit(new Values(txtStr));
 		}
 	}
 
