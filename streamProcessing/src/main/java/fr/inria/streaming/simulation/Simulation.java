@@ -12,6 +12,7 @@ import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
+import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.TopologyBuilder;
 import fr.inria.streaming.simulation.bolt.MostFrequentCharacterBolt;
 import fr.inria.streaming.simulation.data.PersistenceManager;
@@ -153,6 +154,7 @@ public class Simulation {
 			// "fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler");
 
 			TopologyBuilder builder = new TopologyBuilder();
+			// set the Spout component
 			builder.setSpout(
 					spout,
 					new FrequencyEmissionSpout(Long
@@ -160,13 +162,15 @@ public class Simulation {
 							.valueOf(persistenceFrequencyHertz), Integer
 							.valueOf(tweetLength), description, bandwidth,
 							new FakeTweetContentSource()), 1).setNumTasks(1);
-			builder.setBolt(
-					bolt,
-					new MostFrequentCharacterBolt(Long
-							.valueOf(persistenceFrequencyHertz), Integer
-							.valueOf(tweetLength), Integer
-							.valueOf(emissionFrequencyHertz), description,
-							bandwidth), 1).setNumTasks(1)
+
+			// set the Bolt component
+			MostFrequentCharacterBolt boltComponent = new MostFrequentCharacterBolt(
+					Long.valueOf(persistenceFrequencyHertz),
+					Integer.valueOf(tweetLength),
+					Integer.valueOf(emissionFrequencyHertz), description,
+					bandwidth);
+
+			builder.setBolt(bolt, boltComponent, 1).setNumTasks(1)
 					.shuffleGrouping(spout);
 
 			if (isDistributedMode) {
@@ -202,7 +206,7 @@ public class Simulation {
 						.append(". The number of spout persistence invocations is: ")
 						.append(FrequencyEmissionSpout.getPersistenceCount())
 						.append(", and the number of bolt persistence invocations is: ")
-						.append(MostFrequentCharacterBolt.getPersistenceCount())
+						.append(boltComponent.getPersistenceCount())
 						.toString();
 
 				_logger.info(summaryMsg);
