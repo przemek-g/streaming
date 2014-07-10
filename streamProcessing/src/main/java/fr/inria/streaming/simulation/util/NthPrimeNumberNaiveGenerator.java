@@ -6,8 +6,9 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-public class NthPrimeNumberNaiveGenerator {
+public class NthPrimeNumberNaiveGenerator implements java.io.Serializable {
 
+	private static final long serialVersionUID = -1058263036713645061L;
 	private static Logger _logger = Logger
 			.getLogger(NthPrimeNumberNaiveGenerator.class);
 

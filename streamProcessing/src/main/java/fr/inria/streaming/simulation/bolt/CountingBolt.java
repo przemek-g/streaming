@@ -56,9 +56,6 @@ public abstract class CountingBolt extends BaseRichBolt {
 	public void execute(Tuple input) {
 		if (!TupleUtils.isTickTuple(input)) {
 
-			// count this invocation
-			getInvocationsCounter().increment();
-
 			// perform the bolt-specific processing of the input tuple
 			Values valuesToSend = process(input);
 
@@ -74,6 +71,10 @@ public abstract class CountingBolt extends BaseRichBolt {
 			// if using Storm's reliability mechanisms, acknowledge the incoming
 			// tuple
 			_outputCollector.ack(input);
+			
+			// count this invocation
+			getInvocationsCounter().increment();
+			
 		} else {
 			getLogger().info("BOLT: " + getClass() + " got a tick tuple!");
 		}

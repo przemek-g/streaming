@@ -75,7 +75,7 @@ public class Simulation {
 				"Length of a single tweet that gets emitted into the channel");
 
 		options.addOption(
-				"cpu-intensive",
+				"cpuIntensive",
 				false,
 				"If this option is given, the bolt will perform some CPU heavy computations in order to generate load on the processing node");
 
@@ -105,7 +105,7 @@ public class Simulation {
 			String tweetLength = cmd.getOptionValue("tweetLength");
 			String bandwidth = cmd.getOptionValue("bandwidth");
 
-			boolean isCPUIntensive = cmd.hasOption("cpu-intensive");
+			boolean isCPUIntensive = cmd.hasOption("cpuIntensive");
 
 			if (topology == null) {
 				topology = SimulationTopologyScheduler.getTopologyName();
