@@ -16,6 +16,10 @@ public class NthPrimeNumberBolt extends CountingBolt {
 	private static long _persistenceCounter = 0;
 	private static InvocationsCounter _invocationsCounter = InvocationsCounter
 			.getInstance(MostFrequentCharacterBolt.class.getName());
+	
+	public static long getExecutionsCount() {
+		return _invocationsCounter.getCount();
+	}
 
 	private NthPrimeNumberNaiveGenerator _primeGen = new NthPrimeNumberNaiveGenerator();
 	

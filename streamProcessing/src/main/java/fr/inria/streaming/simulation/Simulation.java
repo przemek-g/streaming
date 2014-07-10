@@ -1,5 +1,7 @@
 package fr.inria.streaming.simulation;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -14,7 +16,9 @@ import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.TopologyBuilder;
+import fr.inria.streaming.simulation.bolt.CountingBolt;
 import fr.inria.streaming.simulation.bolt.MostFrequentCharacterBolt;
+import fr.inria.streaming.simulation.bolt.NthPrimeNumberBolt;
 import fr.inria.streaming.simulation.data.PersistenceManager;
 import fr.inria.streaming.simulation.scheduler.SimulationTopologyScheduler;
 import fr.inria.streaming.simulation.spout.FrequencyEmissionSpout;
@@ -70,6 +74,11 @@ public class Simulation {
 		options.addOption("tl", "tweetLength", true,
 				"Length of a single tweet that gets emitted into the channel");
 
+		options.addOption(
+				"cpu-intensive",
+				false,
+				"If this option is given, the bolt will perform some CPU heavy computations in order to generate load on the processing node");
+
 		return options;
 	}
 
@@ -95,6 +104,8 @@ public class Simulation {
 			String description = cmd.getOptionValue("description");
 			String tweetLength = cmd.getOptionValue("tweetLength");
 			String bandwidth = cmd.getOptionValue("bandwidth");
+
+			boolean isCPUIntensive = cmd.hasOption("cpu-intensive");
 
 			if (topology == null) {
 				topology = SimulationTopologyScheduler.getTopologyName();
@@ -141,7 +152,8 @@ public class Simulation {
 			_logger.info("Description: " + description);
 			_logger.info("Tweet length is: "
 					+ FakeTweetContentSource.getTweetLength());
-			_logger.info("Network link bandwidth is:" + bandwidth);
+			_logger.info("Network link bandwidth is: " + bandwidth);
+			_logger.info("Is CPU-intensive: " + isCPUIntensive);
 
 			Config conf = new Config();
 			conf.setDebug(true);
@@ -164,11 +176,24 @@ public class Simulation {
 							new FakeTweetContentSource()), 1).setNumTasks(1);
 
 			// set the Bolt component
-			MostFrequentCharacterBolt boltComponent = new MostFrequentCharacterBolt(
-					Long.valueOf(persistenceFrequencyHertz),
-					Integer.valueOf(tweetLength),
-					Integer.valueOf(emissionFrequencyHertz), description,
-					bandwidth);
+			CountingBolt boltComponent;
+			Class countingClass;
+
+			if (isCPUIntensive) {
+				boltComponent = new NthPrimeNumberBolt(
+						Long.valueOf(persistenceFrequencyHertz),
+						Integer.valueOf(tweetLength),
+						Integer.valueOf(emissionFrequencyHertz), description,
+						bandwidth);
+				countingClass = NthPrimeNumberBolt.class;
+			} else {
+				boltComponent = new MostFrequentCharacterBolt(
+						Long.valueOf(persistenceFrequencyHertz),
+						Integer.valueOf(tweetLength),
+						Integer.valueOf(emissionFrequencyHertz), description,
+						bandwidth);
+				countingClass = MostFrequentCharacterBolt.class;
+			}
 
 			builder.setBolt(bolt, boltComponent, 1).setNumTasks(1)
 					.shuffleGrouping(spout);
@@ -202,12 +227,15 @@ public class Simulation {
 						"Shutdown complete. The number of messages emitted by the spout is: ")
 						.append(FrequencyEmissionSpout.getEmissionsCounter())
 						.append(", the number of execution invocations on the bolt is: ")
-						.append(MostFrequentCharacterBolt.getExecutionsCount())
+						// the following one is not a nice solution in terms of design,
+						// but nevermind - not essential here
+						.append(countingClass.getDeclaredMethod(
+								"getExecutionsCount", (Class[]) null).invoke(
+								null, (Object[]) null))
 						.append(". The number of spout persistence invocations is: ")
 						.append(FrequencyEmissionSpout.getPersistenceCount())
 						.append(", and the number of bolt persistence invocations is: ")
-						.append(boltComponent.getPersistenceCount())
-						.toString();
+						.append(boltComponent.getPersistenceCount()).toString();
 
 				_logger.info(summaryMsg);
 			}
@@ -221,6 +249,21 @@ public class Simulation {
 			_logger.error("The topology name is invalid !!!:" + e.toString());
 		} catch (InterruptedException e) {
 			_logger.error("The thread has been interrupted: " + e.toString());
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
