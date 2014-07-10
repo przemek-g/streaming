@@ -1,21 +1,20 @@
 package fr.inria.streaming.simulation.spout;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.mockito.Mockito;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import fr.inria.streaming.simulation.data.FakePersister;
 import fr.inria.streaming.simulation.util.FakeTweetContentSource;
 import fr.inria.streaming.simulation.util.ITextContentSource;
 
