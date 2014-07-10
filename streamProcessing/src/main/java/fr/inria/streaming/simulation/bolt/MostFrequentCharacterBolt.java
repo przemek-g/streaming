@@ -19,7 +19,6 @@ public class MostFrequentCharacterBolt extends CountingBolt {
 	private static InvocationsCounter _invocationsCounter = InvocationsCounter
 			.getInstance(MostFrequentCharacterBolt.class.getName());
 
-
 	public static long getExecutionsCount() {
 		return _invocationsCounter.getCount();
 	}
@@ -27,25 +26,27 @@ public class MostFrequentCharacterBolt extends CountingBolt {
 	// --- instance ---
 	private CharactersCounter _charsCounter = new CharactersCounter();
 
-//	private ICountPersister _persister;
-//	private long _persistencePeriodNanos;
-//	private String _description;
-//	private String _elementType = "BOLT";
-//	private String _networkBandwidth;
-//	private int _tweetLength;
-//	private int _emissionFrequency;
+	// private ICountPersister _persister;
+	// private long _persistencePeriodNanos;
+	// private String _description;
+	// private String _elementType = "BOLT";
+	// private String _networkBandwidth;
+	// private int _tweetLength;
+	// private int _emissionFrequency;
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
 			int tweetLength, int emissionFreq, String description,
 			String throughputInfo) {
-		
-		super(persistenceFrequencyHz, tweetLength, emissionFreq, description, throughputInfo);
-		
-//		_persistencePeriodNanos = (long) (1.0 / persistenceFrequencyHz * NANOS_IN_SECOND);
-//		_tweetLength = tweetLength;
-//		_emissionFrequency = emissionFreq;
-//		_description = description;
-//		_networkBandwidth = throughputInfo;
+
+		super(persistenceFrequencyHz, tweetLength, emissionFreq, description,
+				throughputInfo);
+
+		// _persistencePeriodNanos = (long) (1.0 / persistenceFrequencyHz *
+		// NANOS_IN_SECOND);
+		// _tweetLength = tweetLength;
+		// _emissionFrequency = emissionFreq;
+		// _description = description;
+		// _networkBandwidth = throughputInfo;
 	}
 
 	public MostFrequentCharacterBolt(long persistenceFrequencyHz,
@@ -68,19 +69,18 @@ public class MostFrequentCharacterBolt extends CountingBolt {
 
 		return new Values(_charsCounter.getMaxResultCharacter(),
 				_charsCounter.getMaxResultCount());
-		
+
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		declarer.declare(new Fields("character", "count")); 
+		declarer.declare(new Fields("character", "count"));
 	}
-	
+
 	@Override
 	public long getPersistenceCount() {
 		return _persistenceCounter;
 	}
-
 
 	@Override
 	protected void incrementPersistenceCount() {

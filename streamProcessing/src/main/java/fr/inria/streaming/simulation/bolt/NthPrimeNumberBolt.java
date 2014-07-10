@@ -7,24 +7,27 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
+import fr.inria.streaming.simulation.util.NthPrimeNumberNaiveGenerator;
 
 public class NthPrimeNumberBolt extends CountingBolt {
 
 	private static final long serialVersionUID = -1087800281539238338L;
-	private static Logger logger = Logger.getLogger(NthPrimeNumberBolt.class);
+	private static Logger _logger = Logger.getLogger(NthPrimeNumberBolt.class);
 	private static long _persistenceCounter = 0;
 	private static InvocationsCounter _invocationsCounter = InvocationsCounter
 			.getInstance(MostFrequentCharacterBolt.class.getName());
 
-	protected NthPrimeNumberBolt(long persistenceFrequencyHz, int tweetLength,
+	private NthPrimeNumberNaiveGenerator _primeGen = new NthPrimeNumberNaiveGenerator();
+	
+	public NthPrimeNumberBolt(long persistenceFrequencyHz, int tweetLength,
 			int emissionFreq, String description, String throughputInfo) {
 		super(persistenceFrequencyHz, tweetLength, emissionFreq, description,
 				throughputInfo);
 	}
-
+	
 	@Override
-	public void execute(Tuple tuple) {
-
+	protected Logger getLogger() {
+		return _logger;
 	}
 
 	@Override
@@ -33,22 +36,12 @@ public class NthPrimeNumberBolt extends CountingBolt {
 	}
 
 	@Override
-	protected Logger getLogger() {
-		return logger;
-	}
-
-	@Override
 	protected Values process(Tuple tuple) {
-//		String text = tuple.getValueByField("text").toString();
-//		for (int i = 0; i < text.length(); i++) {
-//			_charsCounter.count(text.charAt(i));
-//		}
-//
-//		return new Values(_charsCounter.getMaxResultCharacter(),
-//				_charsCounter.getMaxResultCount());
 		
-		return null;
-
+		int l = tuple.getValueByField("text").toString().length();
+		long prime = _primeGen.generateNthPrime(l);
+		
+		return new Values(l,prime);
 	}
 
 	@Override
@@ -65,5 +58,4 @@ public class NthPrimeNumberBolt extends CountingBolt {
 	protected InvocationsCounter getInvocationsCounter() {
 		return _invocationsCounter;
 	}
-
 }
