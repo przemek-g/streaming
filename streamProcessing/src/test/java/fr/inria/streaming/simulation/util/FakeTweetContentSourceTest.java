@@ -36,5 +36,9 @@ public class FakeTweetContentSourceTest {
 		FakeTweetContentSource.setTweetLength(400);
 		tweet = source.getTextContent();
 		assertEquals(400, tweet.length);
+		
+		FakeTweetContentSource.setTweetLength(5000);
+		tweet = source.getTextContent();
+		assertEquals(5000, tweet.length);
 	}
 }

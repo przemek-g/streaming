@@ -79,6 +79,11 @@ public class Simulation {
 				false,
 				"If this option is given, the bolt will perform some CPU heavy computations in order to generate load on the processing node");
 
+		options.addOption(
+				"intensityModifier",
+				true,
+				"Factor making computations more intensive (computing intensityModifer*tweetLength - th prime number)");
+
 		return options;
 	}
 
@@ -106,6 +111,7 @@ public class Simulation {
 			String bandwidth = cmd.getOptionValue("bandwidth");
 
 			boolean isCPUIntensive = cmd.hasOption("cpuIntensive");
+			String intensityModifierStr = cmd.getOptionValue("intensityModifier");
 
 			if (topology == null) {
 				topology = SimulationTopologyScheduler.getTopologyName();
@@ -131,6 +137,7 @@ public class Simulation {
 				description = "no additional info";
 			}
 			if (tweetLength != null) {
+				// WATCH OUT!!! this has to be done within the config
 				FakeTweetContentSource.setTweetLength(Integer
 						.valueOf(tweetLength));
 			}
@@ -157,9 +164,16 @@ public class Simulation {
 
 			Config conf = new Config();
 			conf.setDebug(true);
+
 			// no need to check for illegal values, etc. - will result in a
 			// FakePersister in such cases
 			conf.put(PersistenceManager.DB_CONNECTION_MODE, persistenceType);
+
+			// also convey the tweetLength param for the source-spout
+			if (tweetLength != null) {
+				conf.put(FakeTweetContentSource.TWEET_LENGTH, tweetLength);
+			}
+
 			// the following config setting doesn't work on a per-topology
 			// basis, it's a matter of the whole cluster's configuration
 			// conf.put(Config.STORM_SCHEDULER,
@@ -186,6 +200,14 @@ public class Simulation {
 						Integer.valueOf(emissionFrequencyHertz), description,
 						bandwidth);
 				countingClass = NthPrimeNumberBolt.class;
+				
+				if (intensityModifierStr != null) {
+					try {
+						conf.put(NthPrimeNumberBolt.INTENSITY_MODIFIER, Integer.valueOf(intensityModifierStr));
+					} catch (NumberFormatException e) {
+						_logger.error("IntensityModifier format wrong: "+intensityModifierStr+"; omitting!");
+					}
+				}
 			} else {
 				boltComponent = new MostFrequentCharacterBolt(
 						Long.valueOf(persistenceFrequencyHertz),
@@ -227,7 +249,8 @@ public class Simulation {
 						"Shutdown complete. The number of messages emitted by the spout is: ")
 						.append(FrequencyEmissionSpout.getEmissionsCounter())
 						.append(", the number of execution invocations on the bolt is: ")
-						// the following one is not a nice solution in terms of design,
+						// the following one is not a nice solution in terms of
+						// design,
 						// but nevermind - not essential here
 						.append(countingClass.getDeclaredMethod(
 								"getExecutionsCount", (Class[]) null).invoke(

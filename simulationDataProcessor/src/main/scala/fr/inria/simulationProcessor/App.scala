@@ -51,6 +51,7 @@ object App {
     println(s.toString)
     println(_emptyValuesInterpolation.value.mkString)
   }
+  // end of _printArgs
 
   /**
    * If the emissionFrequency is 0, let's process all frequencies (instead of just one)
@@ -60,7 +61,7 @@ object App {
     /* --- define some auxiliary methods --- */
     /* returns a list containing frequencies (unique occurrences) from both databse urls */
     def _getUniqueFrequenciesFromTwoDatabases() = {
-      val freqRetriever = new FrequenciesRetriever(_bandwidth.value.get, _tweetLength.value.get)
+      val freqRetriever = new FrequenciesRetriever(_bandwidth.value.get, _tweetLength.value.get, _description.value.get)
       val s = freqRetriever.getDistinctFrequencyValues(_database_1_url.value.get).toSet
       s.++(freqRetriever.getDistinctFrequencyValues(_database_2_url.value.get)).toList.sortWith(_ < _)
     }
@@ -115,7 +116,8 @@ object App {
     })
 
   }
-
+	// end of _runSimulationDataProcessor()
+  
   def main(args: Array[String]) {
     try {
       _parser parse args
@@ -127,5 +129,6 @@ object App {
       case e: Exception => _logger error "An exception occurred: " + e.toString
     }
   }
+  // end of main
 
 }

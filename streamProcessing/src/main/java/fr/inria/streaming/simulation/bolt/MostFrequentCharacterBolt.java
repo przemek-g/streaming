@@ -63,6 +63,7 @@ public class MostFrequentCharacterBolt extends CountingBolt {
 	@Override
 	protected Values process(Tuple tuple) {
 		String text = tuple.getValueByField("text").toString();
+		getLogger().info("Processing a tuple with length "+text.length());
 		for (int i = 0; i < text.length(); i++) {
 			_charsCounter.count(text.charAt(i));
 		}

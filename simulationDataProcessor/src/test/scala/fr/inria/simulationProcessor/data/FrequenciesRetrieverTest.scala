@@ -68,7 +68,7 @@ class FrequenciesRetrieverTest {
 
     _prepareDatabase(inserts)
 
-    var frequencies = new FrequenciesRetriever("2Mbit/s", 100).getDistinctFrequencyValues(_url)
+    var frequencies = new FrequenciesRetriever("2Mbit/s", 100, "some_description").getDistinctFrequencyValues(_url)
     assertNotNull(frequencies)
     assertResult(3){ frequencies.size }
    

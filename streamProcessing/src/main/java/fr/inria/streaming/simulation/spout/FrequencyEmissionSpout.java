@@ -11,6 +11,7 @@ import fr.inria.streaming.simulation.Simulation;
 import fr.inria.streaming.simulation.data.ICountPersister;
 import fr.inria.streaming.simulation.data.InvocationsCounter;
 import fr.inria.streaming.simulation.data.PersistenceManager;
+import fr.inria.streaming.simulation.util.FakeTweetContentSource;
 import fr.inria.streaming.simulation.util.ITextContentSource;
 import fr.inria.streaming.simulation.util.ThreadsManager;
 import backtype.storm.spout.SpoutOutputCollector;
@@ -33,7 +34,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 
 	private static final long NANOS_IN_SECOND = 1000000000;
 
-	private static Logger logger = Logger
+	private static Logger _logger = Logger
 			.getLogger(FrequencyEmissionSpout.class);
 
 	private static long _intendedEmissionsCounter = 0;
@@ -93,11 +94,15 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 				.append(_persistencePeriodNanoSeconds).append(" [ns]")
 				.toString();
 
-		logger.info(openingMsg);
+		if (conf.containsKey(FakeTweetContentSource.TWEET_LENGTH)) {
+			FakeTweetContentSource.setTweetLength(Integer.valueOf((String)conf.get(FakeTweetContentSource.TWEET_LENGTH)));
+		}
+		
+		_logger.info(openingMsg);
 		_outputCollector = collector;
 
 		this._persister = PersistenceManager.getPersisterInstance(conf);
-		logger.info("FrequencyEmissionSpout set its persister to the following one:"
+		_logger.info("FrequencyEmissionSpout set its persister to the following one:"
 				+ this._persister.toString());
 
 		// schedule emission of a tuple at fixed rate with 0 delay
@@ -107,7 +112,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 					public void run() {
 						_intendedEmissionsCounter++;
 
-						logger.info(new StringBuilder(
+						_logger.info(new StringBuilder(
 								"Spout INTENDED emission nr ")
 								.append(_intendedEmissionsCounter)
 								.append(" ...").toString());
@@ -123,7 +128,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 					public void run() {
 						_persistenceCounter++;
 
-						logger.info(new StringBuilder(
+						_logger.info(new StringBuilder(
 								"Spout INTENDED persistence nr ")
 								.append(_persistenceCounter).append("...")
 								.toString());
@@ -146,7 +151,7 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 			Thread.sleep(100); // the documentation says it's good to sleep here
 								// so as not to waste too much cpu
 		} catch (InterruptedException e) {
-			logger.warn("Thread interrupted while sleeping for 100 ms in nextTuple: "
+			_logger.warn("Thread interrupted while sleeping for 100 ms in nextTuple: "
 					+ e.toString());
 		}
 	}
@@ -162,10 +167,6 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 		if (text != null) {
 
 			String txtStr = new String(text);
-			_invocationsCounter.increment();
-			logger.info(new StringBuilder("Spout emission nr ")
-					.append(_invocationsCounter.getCount()).append(" : ")
-					.append(txtStr).toString());
 
 			// to take advantage of Storm's reliability
 			String msgId = "msg_"+String.valueOf(_invocationsCounter.getCount());
@@ -173,6 +174,11 @@ public class FrequencyEmissionSpout extends BaseRichSpout {
 			
 			// don't care about reliability
 //			this._outputCollector.emit(new Values(txtStr));
+
+			_invocationsCounter.increment();
+			_logger.info(new StringBuilder("Spout emission nr ")
+			.append(_invocationsCounter.getCount()).append(" : ")
+			.append(txtStr).toString());
 		}
 	}
 

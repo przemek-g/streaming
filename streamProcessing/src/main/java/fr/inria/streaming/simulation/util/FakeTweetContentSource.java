@@ -10,7 +10,9 @@ public class FakeTweetContentSource implements ITextContentSource {
 	private static final long serialVersionUID = -701439285752114025L;
 	private static List<char[]> _originalTweets = new ArrayList<char[]>();
 	private static char[][] _processedTweets;
-	private static int _tweetLength = 0;;
+	private static int _tweetLength = 0;
+	
+	public static final String TWEET_LENGTH = "tweetLength";
 	
 	static {
 		_originalTweets.add("If only Bradley's arm was longer. Best photo ever. #oscars pic.twitter.com/C9U5NOtGap".toCharArray());
